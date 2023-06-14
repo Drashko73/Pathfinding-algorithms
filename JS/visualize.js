@@ -1,44 +1,4 @@
-const START = -1;                                   // vrednost koja u matrici predstavlja pocetnu poziciju 
-const END = -2;                                     // vrednost koja u matrici predstavlja krajnju poziciju
-const EMPTY = 0;                                    // vrednost koja u matrici predstavlja slobodno polje
-const NOT_EMPTY = 1;                                // vrednost koja u matrici predstavlja polje koje nije slobodno
-const INFINITY = -1;
 
-const brojVrsta = 13;
-const brojKolona = 32;
-
-let matrica;                                        // matrica koja se koristi kod zadatka za vizualizaciju algoritama
-let visitedDFS;                                     // matrica koriscena za DFS
-let prethodniciBFS;                                 // matrica koja predstavlja matricu prethodnika algoritma BFS
-let prethodniciDFS;                                 // matrica koja predstavlja matricu prethodnika algoritma DFS
-let docData = undefined;                            // Podaci koji su parsirani iz xml-a
-let mouseclicked = false;                           // da li je pritisnut neki klik na misu
-
-const positionStartI = 6;                             // pocetna pozicija i-ta koordinata
-const positionStartJ = 2;                             // pocetna pozicija j-ta koordinata
-const positionEndI = 6;                               // zavrsna pozicija i-ta koordinata
-const positionEndJ = 29;                              // zavrsna pozicija j-ta koordinata
-
-const kontejnerZaMatricu = document.getElementById("matrix");                               // referenca na div u kojem se nalazi tabela koja predstavlja matricu
-const kontejnerFooter = document.getElementById("footer");                                  // referenca na div koji prestavlja footer
-const tekstPomeranje = document.querySelector("div#footer span");                           // referenca na span sa tekstom koji se pomera u footer-u
-const spanShowAlgo = document.querySelector("span#izaberiAlgoritam span");                  // referenca na span u kojem stoji tekst Algoritmi
-const ostatciAlgoritma = document.getElementById("obrisiNakonAlgoritma");                   // referenca na span koji kada se klikne uklanja ostatke vizualizacije algoritma
-const dostupniAlgoritmi = ["BFS algoritam", "DFS algoritam"]                                // niz dostupnih algoritama koji se mogu izabrati
-
-
-let izborAlgoritma = null;                          // koji algoritam je izabran
-let showAlgorithm = 0;                              // da li je odabran prikaz dostupnih algoritama
-let dozvoliMenjanje = true;                         // indikator koji onemogucava bilo kakvu promenu na tabli u toku vizualizacije algoritma
-
-let showMaze = 0;
-const spanShowMaze = document.querySelector("span#izaberiLavirint span");
-
-/* Pomeranje footer-a */
-const step = 1;                                     // za koliko piksela se pomera tekst u footer-u
-let positionLeft = 0;                               // udaljenost sa leve strane
-let turn = 1;                                       // sa koje na koju stranu ide
-let interval = null;                                // id intervala
 
 function preparePage() {
     matrica = [];
@@ -615,3 +575,45 @@ function returnStringRepresentation(indexI, indexJ) {
 
     return "matrixDataID" + str1 + str2;
 }
+
+const START = -1;                                   // vrednost koja u matrici predstavlja pocetnu poziciju 
+const END = -2;                                     // vrednost koja u matrici predstavlja krajnju poziciju
+const EMPTY = 0;                                    // vrednost koja u matrici predstavlja slobodno polje
+const NOT_EMPTY = 1;                                // vrednost koja u matrici predstavlja polje koje nije slobodno
+const INFINITY = -1;
+
+const brojVrsta = 13;
+const brojKolona = 32;
+
+let matrica;                                        // matrica koja se koristi kod zadatka za vizualizaciju algoritama
+let visitedDFS;                                     // matrica koriscena za DFS
+let prethodniciBFS;                                 // matrica koja predstavlja matricu prethodnika algoritma BFS
+let prethodniciDFS;                                 // matrica koja predstavlja matricu prethodnika algoritma DFS
+let docData = undefined;                            // Podaci koji su parsirani iz xml-a
+let mouseclicked = false;                           // da li je pritisnut neki klik na misu
+
+const positionStartI = 6;                             // pocetna pozicija i-ta koordinata
+const positionStartJ = 2;                             // pocetna pozicija j-ta koordinata
+const positionEndI = 6;                               // zavrsna pozicija i-ta koordinata
+const positionEndJ = 29;                              // zavrsna pozicija j-ta koordinata
+
+const kontejnerZaMatricu = document.getElementById("matrix");                               // referenca na div u kojem se nalazi tabela koja predstavlja matricu
+const kontejnerFooter = document.getElementById("footer");                                  // referenca na div koji prestavlja footer
+const tekstPomeranje = document.querySelector("div#footer span");                           // referenca na span sa tekstom koji se pomera u footer-u
+const spanShowAlgo = document.querySelector("span#izaberiAlgoritam span");                  // referenca na span u kojem stoji tekst Algoritmi
+const ostatciAlgoritma = document.getElementById("obrisiNakonAlgoritma");                   // referenca na span koji kada se klikne uklanja ostatke vizualizacije algoritma
+const dostupniAlgoritmi = ["BFS algoritam", "DFS algoritam"]                                // niz dostupnih algoritama koji se mogu izabrati
+
+
+let izborAlgoritma = null;                          // koji algoritam je izabran
+let showAlgorithm = 0;                              // da li je odabran prikaz dostupnih algoritama
+let dozvoliMenjanje = true;                         // indikator koji onemogucava bilo kakvu promenu na tabli u toku vizualizacije algoritma
+
+let showMaze = 0;
+const spanShowMaze = document.querySelector("span#izaberiLavirint span");
+
+/* Pomeranje footer-a */
+const step = 1;                                     // za koliko piksela se pomera tekst u footer-u
+let positionLeft = 0;                               // udaljenost sa leve strane
+let turn = 1;                                       // sa koje na koju stranu ide
+let interval = null;                                // id intervala
