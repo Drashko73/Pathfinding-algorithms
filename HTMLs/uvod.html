@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="rs">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Radovan Draskovic">
+        <title>Uvod</title>
+        <link rel="stylesheet" href="../SyleSheets/style1.css">
+        <link rel="shortcut icon" href="../Images/introduction_tab_icon.png" type="image/x-icon">
+        <link href='https://fonts.googleapis.com/css?family=Amaranth' rel='stylesheet'>
+
+    </head>
+    <body>
+    <div id="page">
+        
+        <div id="vertikalniMeni">
+            <div id="meni">
+                <ul>
+                    <li><a href="index.html">Naslovna</a></li>
+                    <li><a href="uvod.html">Uvod</a></li>
+                    <li><a href="algoritmiZaOdredjivanjePuta.html">Algoritmi za odredjivanje puta</a></li>
+                    <li><a href="visualize.html" target="_blank">Vizualizator</a></li>
+                    <li><a href="kontakt.html">Kontaktiraj me</a></li>
+                    <li class="logout-li"><a href="index.html" onclick="logout()">Izloguj se</a></li>
+                </ul>
+
+                <img src="../Images/algorithmTree1.png" alt="" width="220px" draggable="false">
+            </div>
+        </div>
+        
+        <div id="contentUvod" class="content">
+            <div id="naslov">
+                <h1>Šta su algoritmi</h1>
+            </div>
+            
+            <div id="uvod">
+                <h2>Uvod</h2>
+                <p id="algoritmiUopsteno">
+                    <img src="../Images/algorithmTree2.png" alt="AlgTree" width="250px" style="float: right; margin: 0px 0px 0px 10px; border: 2px solid black;" draggable="false">
+                    <strong>Algoritam</strong> je konačna i precizno definisana procedura, niz dobro definisanih pravila, kojom se ulazne vrednosti transformišu u izlazne, ili se opisuje izvršavanje nekog postupka. Danas se reč algoritam često vezuje za pojam <strong>računarstva</strong> mada uopšteno algoritam možemo smatrati kao <strong><em>uputstvo kako rešiti neki zadatak ili problem</em></strong>. Uputstvo može sadržati korake koji se ponavljaju više puta ili korake kada treba doneti neku odluku, na osnovu nekog kriterijuma. Različiti algoritmi mogu rešiti isti problem različitim nizom postupaka uz manje ili više napora, za kraće ili duže vreme. Obzirom da je rezultat isti, algoritmi se mogu porediti po svojoj efikasnosti, brzini ili kompleksnosti.
+                </p>
+
+                <p id="istorijaAlgoritama">
+                    Prvi algoritam koji se može smatrati procedurom čija je namena račun na automatskoj mašini je napisala <a href="https://sr.wikipedia.org/wiki/%D0%95%D1%98%D0%B4%D0%B0_%D0%9A%D0%B8%D0%BD%D0%B3_%D0%9B%D0%B0%D0%B2%D0%BB%D0%B5%D1%98%D1%81" target="_blank">Ejda Bajron</a> 1842. godine. U pitanju je algoritam za račun Bernulijevih brojeva na analitičkoj mašini Čarlsa Bebidža. Ta mašina nikad nije proradila, ali je njen algoritam ostavio dubok trag. Danas se to priznaje kao prvi računarski algoritam, a Ejda Bajron, ledi Lavlejs, je priznata kao <strong>prvi programer u istoriji</strong>. U njenu čast je i jedan od najkompleksnijih programskih jezika dobio naziv Ada. Značajan napredak u formalizaciji uvođenja algoritma u matematiku i logiku je učinio <a href="https://sr.wikipedia.org/wiki/%D0%90%D0%BB%D0%B0%D0%BD_%D0%A2%D1%98%D1%83%D1%80%D0%B8%D0%BD%D0%B3" target="_blank">Alan Tjuring</a> u svojim radovima definisanjem Tjuringove mašine. To je primitivan automat, misaona tvorevina, ali poseduje mogućnost izvođenja nekoliko operacija koje su dovoljne za izvođenje skoro svih algoritama. Čerč-Tjuringova teza tvrdi da se svaki algoritam koji je dobro definisan može izvršiti na takvoj mašini. Tako se, i pored jednostavnosti ove mašine, začela teorija konačnih automata kao nova oblast.
+                </p>
+            </div>
+
+            <div id="osobineElementi">
+                <h3>Osobine algoritama</h3>
+                <p>
+                    Algoritmi poseduju sledeće osobine:
+                    <ul>
+                        <li>Diskretnost - u odvojenim koracima se izvršavaju diskretne operacije algoritma koji vode ka konačnom cilju;</li>
+                        <li>Rezultativnost - označava sposobnost algoritma da posle konačnog broja koraka daje izlazne podatke;</li>
+                        <li>Determinisanost - za iste ulazne podatke algoritam uvek generiše iste vrednosti na izlazima i</li>
+                        <li>Masovnost - algoritam je primenljiv na veći broj ulaznih vrednosti.</li>
+                    </ul>
+                </p>
+
+                <h3>Elementi</h3>
+                <p>
+                    Rešenje bilo kog problema koji se može rešiti pomoću računara, se može izraziti kao superpozicija sledećih struktura: <em>sekvence, selekcije i iteracije</em>.
+                </p>
+                <p>
+                    <strong>Sekvenca</strong> je uređen niz instrukcija gde se po izvršenju i-te instrukcije, može preći na i+1 instrukciju, zatim na i+2 instrukciju i tako dalje.
+                </p>
+                <p>
+                    <strong>Selekcija</strong> omogućava izbor jednog toka kojim će se nastaviti izvršavanje instrukcija. Izbor toka vrši se proverom uslova koji je definisan kao logički izraz (predikat).<br>
+                    <span id="marginTop">Razlikuje se sledeći tipovi selekcija:</span>
+                    <ul>
+                        <li>IF <em>uslov</em> THEN operacija (ako je uslov ispunjen tada izvrši operaciju)</li>
+                        <li>IF <em>uslov</em> THEN operacija1 ELSE operacija2 (ako je uslov ispunjen, tada izvrši operaciju 1, u suprotnom izvrši operaciju 2)</li>
+                        <li>CASE <em>uslov</em> OF<br>
+                            vrednost1: operacija1<br>
+                            vrednost2: operacija2<br>
+                            ...<br>
+                            ELSE operacijan (ako uslov ima vrednost1 izvrši operaciju1, ako uslov ima vrednost2, izvrši operaciju2... u suprotnom izvrši operacijun)</li>
+                    </ul>
+                </p>
+                <p>
+                    <strong>Iteracija</strong> omogućava ponavljanje operacija tela operacije potreban broj puta. Broj ponavljanja se kontroliše uslovom u formi predikata. Razlikuju se sledeći tipovi iteracije:
+                    <ul>
+                        <li>
+                            iteracije sa izlaskom na vrhu
+                            <ul>
+                                <li>WHILE uslov DO operacija (sve dok je uslov ispunjem, radi operaciju)</li>
+                                <li>FOR početak TO kraj DO operacija (od početne vrednosti do krajnje vrednosti, radi operaciju)</li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            iteracije na izlasku na dnu
+                            <ul>
+                                <li>REPEAT operacija UNTIL uslov (ponavljaj operaciju sve dok se ne ispuni uslov)</li>
+                            </ul>
+                        </li>
+
+                        <li>iteracije sa izlaskom u sredini (slabo sintaksno podržane, imaju uglavnom teorijski značaj)</li>
+                    </ul>
+                </p>
+            </div>
+
+            <div id="klasifikacijaAlgoritama">
+                <h3>Klasifikacija algoritama</h3>
+                <table>
+                    <tr>
+                        <th>Podeli pa vladaj</th>
+                        <td>Algoritmi smanjuju stepen složenosti problema podelom na dva ili više manjih problema od iste vrste (obično rekurzivno), dok od problema ne ostane toliko mali deo da se može jednostavno rešiti.</td>
+                    </tr>
+                    <tr>
+                        <th>Dinamičko programiranje</th>
+                        <td>Kada problem pokazuje optimalnu podstrukturu, u smislu da se optimalno rešenje problema može konstruisati iz optimalnog rešenja potproblema, i preklapanjem potproblema, što znači da se isti potproblem koristi za rešavanje više različitih primera problema, možemo rešiti brzo koristeći dinamičko programiranje, pristup koji izbegava ponovno izračunavanje rešenja koja su već izračunata. Na primer, najkraći put do cilja iz čvora težinskog grafa može biti nađen koristeći najkraći put do cilja od svih obližnjih čvorova.</td>
+                    </tr>
+
+                    <tr>
+                        <th>Pohlepni algoritam</th>
+                        <td>Algoritam lakomosti je sličan dinamičkom programiranju, ali je razlika u tome što rešenja potproblema ne moraju biti poznata u svakom trenutku. Stoga, pri traženju rešenja je moguće napraviti i 'lakom' izbor onoga što izgleda najbolje u tom trenutku.</td>
+                    </tr>
+
+                    <tr>
+                        <th>Linearno programiranje</th>
+                        <td>Problem se rešava korišćenjem linearnog programiranja kada postoji više linearnih nejednačina a zadatak je naći maksimum (ili minimum) po nekom kriterijumu. Mnogi realni problemi (kao što je maksimiziranje protoka u usmerenom grafu) mogu biti iskazani na ovaj način, a onda rešeni nekim 'generičkim' algoritmom, kao što je Simpleks algoritam.</td>
+                    </tr>
+
+                    <tr>
+                        <th>Pretraga i numeracija.</th>
+                        <td>Mnogi problemi (kao što je igranje šaha) mogu biti modelovani kao problemi grafa. Algoritam pretraživanja grafa daje pravila kretanja kroz graf i koristan je baš za ovakve probleme. Ova kategorija obuhvata i algoritme pretraživanja i povratka kroz stablo odlučivanja (bektreking).</td>
+                    </tr>
+                </table>
+
+                <p>
+                    <strong>Heuristički algoritmi i algoritmi slučajnosti</strong> ne odgovaraju u potpunosti strogoj definiciji algoritma.
+                    <ol type="I">
+                        <li>Algoritmi slučajnosti prave u nekim situacijama slučajan (ili pseudo slučajan) izbor; za neke probleme se stvarno može dokazati da se do najbržeg rešenja može doći samo uvođenjem izvesnog stepena slučajnosti.</li>
+                        <li>Genetički algoritam pokušava da nađe rešenje problema imitirajući biološki evolucioni proces, koji u nizu slučajnih mutacija daje uzastopne generacije "rešenja". Tako računar simulira razmnožavanje i "preživljavanje najprilagođenijih". U genetičko programiranje je ovaj pristup proširen na algoritme.</li>
+                        <li>Heuristički algoritmi su takvi algoritmi čija je osnovna namena nalaženje optimalnog rešenja, u stvari približnog rešenja, jer vreme ili memorijski prostor za izvršavanje algoritma za nalaženje tačnog najboljeg rešenja nije praktično moguće. Primer algoritama koji su ovakvog tipa su za lokalno pretraživanje, tabu pretraživanje ili algoritam simuliranog otpuštanja, vrsta heurističkog algoritma slučajnosti koji varira rešenje problema u slučajnim iznosima. Naziv simulacija otpuštanja aludira na metalurški proces suprotan kaljenju kada se metal greje pa sporo hladi radi otklanjanja defekta u materijalu. Namera slučajnog variranja je traženje što bližeg rešenja opštem optimalnom rešenju, a ne jednostavno lokalno optimalno rešenje. Ideja je da se amplituda slučajne veličine smanjuje kako se približavamo rešenju.</li>
+                    </ol>
+                </p>
+            </div>
+
+            <div id="linkovi">
+                <h3>Korisni linkovi za istraživanje:</h3>
+                <ul>
+                    <li>
+                        <a href="https://sh.wikipedia.org/w/index.php?title=Spisak_algoritama&action=edit&redlink=1" target="_blank">Spisak algoritama</a>
+                    </li>
+                    <li>
+                        <a href="https://sh.wikipedia.org/w/index.php?title=Vremenska_osa_algoritama&action=edit&redlink=1" target="_blank">Vremenska osa algoritama</a>
+                    </li>
+                    <li>
+                        <a href="https://sh.wikipedia.org/w/index.php?title=Najpoznatiji_algoritmi&action=edit&redlink=1" target="_blank">Najpoznatiji algoritmi</a>
+                    </li>
+                    <li>
+                        <a href="https://sh.wikipedia.org/w/index.php?title=Numeri%C4%8Dki_algoritmi&action=edit&redlink=1" target="_blank">Numerički algoritmi</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+function logout() {
+    sessionStorage.setItem("loginFlag", "false");
+}
+</script>
+
+    </body>
+</html>
