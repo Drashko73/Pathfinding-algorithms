@@ -1,0 +1,49 @@
+div#contentAlgoritmiOdredjivanjePuta {
+    margin-bottom: 10px;
+}
+
+select {
+    width: 200px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+select:focus {
+    border: 2px solid orange;
+    background-color: lightblue;
+    color: black;
+}
+
+div#spaceForCode {
+    border: 2px solid black;
+    margin-top: 15px;
+    height: 600px;
+    background-color: lightblue;
+    overflow: auto;
+    padding: 10px;
+    background-color: lightgreen;
+    opacity: 0.8;
+    scrollbar-width: none;
+}
+
+div#spaceForCode:hover {
+    opacity: 1;
+}
+
+code {
+    color: black;
+}
+
+div#iframePlace {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    height: 330px;
+}
+
+div#iframePlace iframe {
+    width: 100%;
+    height: 100%;
+}
