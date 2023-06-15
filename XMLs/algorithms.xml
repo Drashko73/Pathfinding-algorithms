@@ -1,0 +1,5392 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<document>
+	<algorithm id="bfs_c">
+		<data>
+			<line>#include &lt; stdbool.h &gt;</line>
+		</data>
+		<data>
+			<line>#include &lt; stdio.h &gt;</line>
+		</data>
+		<data>
+			<line>#include &lt; stdlib.h &gt;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>#define MAX_VERTICES 50</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// This struct represents a directed graph using</line>
+		</data>
+		<data>
+			<line>// adjacency list representation</line>
+		</data>
+		<data>
+			<line>typedef struct Graph_t {</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // No. of vertices</line>
+		</data>
+		<data>
+			<line>    int V;</line>
+		</data>
+		<data>
+			<line>    bool adj[MAX_VERTICES][MAX_VERTICES];</line>
+		</data>
+		<data>
+			<line>} Graph;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Constructor</line>
+		</data>
+		<data>
+			<line>Graph* Graph_create(int V)</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    Graph* g = malloc(sizeof(Graph));</line>
+		</data>
+		<data>
+			<line>    g-&gt;V = V;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    for (int i = 0; i &lt; V; i++) {</line>
+		</data>
+		<data>
+			<line>        for (int j = 0; j &lt; V; j++) {</line>
+		</data>
+		<data>
+			<line>            g-&gt;adj[i][j] = false;</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    return g;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Destructor</line>
+		</data>
+		<data>
+			<line>void Graph_destroy(Graph* g) { free(g); }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Function to add an edge to graph</line>
+		</data>
+		<data>
+			<line>void Graph_addEdge(Graph* g, int v, int w)</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    // Add w to v’s list.</line>
+		</data>
+		<data>
+			<line>    g-&gt;adj[v][w] = true;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Prints BFS traversal from a given source s</line>
+		</data>
+		<data>
+			<line>void Graph_BFS(Graph* g, int s)</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    // Mark all the vertices as not visited</line>
+		</data>
+		<data>
+			<line>    bool visited[MAX_VERTICES];</line>
+		</data>
+		<data>
+			<line>    for (int i = 0; i &lt; g-&gt;V; i++) {</line>
+		</data>
+		<data>
+			<line>        visited[i] = false;</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Create a queue for BFS</line>
+		</data>
+		<data>
+			<line>    int queue[MAX_VERTICES];</line>
+		</data>
+		<data>
+			<line>    int front = 0, rear = 0;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Mark the current node as visited and enqueue it</line>
+		</data>
+		<data>
+			<line>    visited[s] = true;</line>
+		</data>
+		<data>
+			<line>    queue[rear++] = s;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    while (front != rear) {</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Dequeue a vertex from queue and print it</line>
+		</data>
+		<data>
+			<line>        s = queue[front++];</line>
+		</data>
+		<data>
+			<line>        printf("%d ", s);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Get all adjacent vertices of the dequeued</line>
+		</data>
+		<data>
+			<line>        // vertex s.</line>
+		</data>
+		<data>
+			<line>        // If an adjacent has not been visited,</line>
+		</data>
+		<data>
+			<line>        // then mark it visited and enqueue it</line>
+		</data>
+		<data>
+			<line>        for (int adjacent = 0; adjacent &lt; g-&gt;V;</line>
+		</data>
+		<data>
+			<line>            adjacent++) {</line>
+		</data>
+		<data>
+			<line>            if (g-&gt;adj[s][adjacent] &amp;&amp; !visited[adjacent]) {</line>
+		</data>
+		<data>
+			<line>                visited[adjacent] = true;</line>
+		</data>
+		<data>
+			<line>                queue[rear++] = adjacent;</line>
+		</data>
+		<data>
+			<line>            }</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Driver code</line>
+		</data>
+		<data>
+			<line>int main()</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    // Create a graph</line>
+		</data>
+		<data>
+			<line>    Graph* g = Graph_create(4);</line>
+		</data>
+		<data>
+			<line>    Graph_addEdge(g, 0, 1);</line>
+		</data>
+		<data>
+			<line>    Graph_addEdge(g, 0, 2);</line>
+		</data>
+		<data>
+			<line>    Graph_addEdge(g, 1, 2);</line>
+		</data>
+		<data>
+			<line>    Graph_addEdge(g, 2, 0);</line>
+		</data>
+		<data>
+			<line>    Graph_addEdge(g, 2, 3);</line>
+		</data>
+		<data>
+			<line>    Graph_addEdge(g, 3, 3);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    printf("Following is Breadth First Traversal "</line>
+		</data>
+		<data>
+			<line>        "(starting from vertex 2) \n");</line>
+		</data>
+		<data>
+			<line>    Graph_BFS(g, 2);</line>
+		</data>
+		<data>
+			<line>    Graph_destroy(g);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    return 0;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+	</algorithm>
+	<algorithm id="bfs_cpp" >
+		<data>
+			<line>// C++ code to print BFS traversal from a given</line>
+		</data>
+		<data>
+			<line>// source vertex</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>#include &lt; bits/stdc++.h &gt;</line>
+		</data>
+		<data>
+			<line>using namespace std;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// This class represents a directed graph using</line>
+		</data>
+		<data>
+			<line>// adjacency list representation</line>
+		</data>
+		<data>
+			<line>class Graph {</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // No. of vertices</line>
+		</data>
+		<data>
+			<line>    int V;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Pointer to an array containing adjacency lists</line>
+		</data>
+		<data>
+			<line>    vector &lt; list &lt; int &gt; &gt; adj;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>public:</line>
+		</data>
+		<data>
+			<line>    // Constructor</line>
+		</data>
+		<data>
+			<line>    Graph(int V);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Function to add an edge to graph</line>
+		</data>
+		<data>
+			<line>    void addEdge(int v, int w);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Prints BFS traversal from a given source s</line>
+		</data>
+		<data>
+			<line>    void BFS(int s);</line>
+		</data>
+		<data>
+			<line>};</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>Graph::Graph(int V)</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    this-&gt;V = V;</line>
+		</data>
+		<data>
+			<line>    adj.resize(V);</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>void Graph::addEdge(int v, int w)</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    // Add w to v's list.</line>
+		</data>
+		<data>
+			<line>    adj[v].push_back(w);</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>void Graph::BFS(int s)</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    // Mark all the vertices as not visited</line>
+		</data>
+		<data>
+			<line>    vector &lt; bool &gt; visited;</line>
+		</data>
+		<data>
+			<line>    visited.resize(V, false);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Create a queue for BFS</line>
+		</data>
+		<data>
+			<line>    list &lt; int &gt; queue;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Mark the current node as visited and enqueue it</line>
+		</data>
+		<data>
+			<line>    visited[s] = true;</line>
+		</data>
+		<data>
+			<line>    queue.push_back(s);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    while (!queue.empty()) {</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Dequeue a vertex from queue and print it</line>
+		</data>
+		<data>
+			<line>        s = queue.front();</line>
+		</data>
+		<data>
+			<line>        cout &lt;&lt; s &lt;&lt; " ";</line>
+		</data>
+		<data>
+			<line>        queue.pop_front();</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Get all adjacent vertices of the dequeued</line>
+		</data>
+		<data>
+			<line>        // vertex s.</line>
+		</data>
+		<data>
+			<line>        // If an adjacent has not been visited,</line>
+		</data>
+		<data>
+			<line>        // then mark it visited and enqueue it</line>
+		</data>
+		<data>
+			<line>        for (auto adjacent : adj[s]) {</line>
+		</data>
+		<data>
+			<line>            if (!visited[adjacent]) {</line>
+		</data>
+		<data>
+			<line>                visited[adjacent] = true;</line>
+		</data>
+		<data>
+			<line>                queue.push_back(adjacent);</line>
+		</data>
+		<data>
+			<line>            }</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Driver code</line>
+		</data>
+		<data>
+			<line>int main()</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    // Create a graph given in the above diagram</line>
+		</data>
+		<data>
+			<line>    Graph g(4);</line>
+		</data>
+		<data>
+			<line>    g.addEdge(0, 1);</line>
+		</data>
+		<data>
+			<line>    g.addEdge(0, 2);</line>
+		</data>
+		<data>
+			<line>    g.addEdge(1, 2);</line>
+		</data>
+		<data>
+			<line>    g.addEdge(2, 0);</line>
+		</data>
+		<data>
+			<line>    g.addEdge(2, 3);</line>
+		</data>
+		<data>
+			<line>    g.addEdge(3, 3);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    cout &lt;&lt; "Following is Breadth First Traversal "</line>
+		</data>
+		<data>
+			<line>        &lt;&lt; "(starting from vertex 2) \n";</line>
+		</data>
+		<data>
+			<line>    g.BFS(2);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    return 0;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+	</algorithm>
+	<algorithm id="bfs_java" >
+		<data>
+			<line>// Java program to print BFS traversal from a given source</line>
+		</data>
+		<data>
+			<line>// vertex. BFS(int s) traverses vertices reachable from s.</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>import java.io.*;</line>
+		</data>
+		<data>
+			<line>import java.util.*;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// This class represents a directed graph using adjacency</line>
+		</data>
+		<data>
+			<line>// list representation</line>
+		</data>
+		<data>
+			<line>class Graph {</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // No. of vertices</line>
+		</data>
+		<data>
+			<line>    private int V;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Adjacency Lists</line>
+		</data>
+		<data>
+			<line>    private LinkedList &lt; Integer &gt; adj[];</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Constructor</line>
+		</data>
+		<data>
+			<line>    Graph(int v)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        V = v;</line>
+		</data>
+		<data>
+			<line>        adj = new LinkedList[v];</line>
+		</data>
+		<data>
+			<line>        for (int i = 0; i &lt; v; ++i)</line>
+		</data>
+		<data>
+			<line>            adj[i] = new LinkedList();</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Function to add an edge into the graph</line>
+		</data>
+		<data>
+			<line>    void addEdge(int v, int w) { adj[v].add(w); }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // prints BFS traversal from a given source s</line>
+		</data>
+		<data>
+			<line>    void BFS(int s)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        // Mark all the vertices as not visited(By default</line>
+		</data>
+		<data>
+			<line>        // set as false)</line>
+		</data>
+		<data>
+			<line>        boolean visited[] = new boolean[V];</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Create a queue for BFS</line>
+		</data>
+		<data>
+			<line>        LinkedList &lt; Integer &gt; queue</line>
+		</data>
+		<data>
+			<line>            = new LinkedList &lt; Integer &gt; ();</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Mark the current node as visited and enqueue it</line>
+		</data>
+		<data>
+			<line>        visited[s] = true;</line>
+		</data>
+		<data>
+			<line>        queue.add(s);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        while (queue.size() != 0) {</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>            // Dequeue a vertex from queue and print it</line>
+		</data>
+		<data>
+			<line>            s = queue.poll();</line>
+		</data>
+		<data>
+			<line>            System.out.print(s + " ");</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>            // Get all adjacent vertices of the dequeued</line>
+		</data>
+		<data>
+			<line>            // vertex s.</line>
+		</data>
+		<data>
+			<line>            // If an adjacent has not been visited,</line>
+		</data>
+		<data>
+			<line>            // then mark it visited and enqueue it</line>
+		</data>
+		<data>
+			<line>            Iterator &lt; Integer &gt; i = adj[s].listIterator();</line>
+		</data>
+		<data>
+			<line>            while (i.hasNext()) {</line>
+		</data>
+		<data>
+			<line>                int n = i.next();</line>
+		</data>
+		<data>
+			<line>                if (!visited[n]) {</line>
+		</data>
+		<data>
+			<line>                    visited[n] = true;</line>
+		</data>
+		<data>
+			<line>                    queue.add(n);</line>
+		</data>
+		<data>
+			<line>                }</line>
+		</data>
+		<data>
+			<line>            }</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Driver code</line>
+		</data>
+		<data>
+			<line>    public static void main(String args[])</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        Graph g = new Graph(4);</line>
+		</data>
+		<data>
+			<line>        g.addEdge(0, 1);</line>
+		</data>
+		<data>
+			<line>        g.addEdge(0, 2);</line>
+		</data>
+		<data>
+			<line>        g.addEdge(1, 2);</line>
+		</data>
+		<data>
+			<line>        g.addEdge(2, 0);</line>
+		</data>
+		<data>
+			<line>        g.addEdge(2, 3);</line>
+		</data>
+		<data>
+			<line>        g.addEdge(3, 3);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        System.out.println(</line>
+		</data>
+		<data>
+			<line>            "Following is Breadth First Traversal "</line>
+		</data>
+		<data>
+			<line>            + "(starting from vertex 2)");</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        g.BFS(2);</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+	</algorithm>
+	<algorithm id="bfs_python3">
+		<data>
+			<line># Python3 Program to print BFS traversal</line>
+		</data>
+		<data>
+			<line># from a given source vertex. BFS(int s)</line>
+		</data>
+		<data>
+			<line># traverses vertices reachable from s.</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>from collections import defaultdict</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line># This class represents a directed graph</line>
+		</data>
+		<data>
+			<line># using adjacency list representation</line>
+		</data>
+		<data>
+			<line>class Graph:</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    # Constructor</line>
+		</data>
+		<data>
+			<line>    def __init__(self):</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        # Default dictionary to store graph</line>
+		</data>
+		<data>
+			<line>        self.graph = defaultdict(list)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    # Function to add an edge to graph</line>
+		</data>
+		<data>
+			<line>    def addEdge(self, u, v):</line>
+		</data>
+		<data>
+			<line>        self.graph[u].append(v)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    # Function to print a BFS of graph</line>
+		</data>
+		<data>
+			<line>    def BFS(self, s):</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        # Mark all the vertices as not visited</line>
+		</data>
+		<data>
+			<line>        visited = [False] * (max(self.graph) + 1)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        # Create a queue for BFS</line>
+		</data>
+		<data>
+			<line>        queue = []</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        # Mark the source node as</line>
+		</data>
+		<data>
+			<line>        # visited and enqueue it</line>
+		</data>
+		<data>
+			<line>        queue.append(s)</line>
+		</data>
+		<data>
+			<line>        visited[s] = True</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        while queue:</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>            # Dequeue a vertex from</line>
+		</data>
+		<data>
+			<line>            # queue and print it</line>
+		</data>
+		<data>
+			<line>            s = queue.pop(0)</line>
+		</data>
+		<data>
+			<line>            print(s, end=" ")</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>            # Get all adjacent vertices of the</line>
+		</data>
+		<data>
+			<line>            # dequeued vertex s.</line>
+		</data>
+		<data>
+			<line>            # If an adjacent has not been visited,</line>
+		</data>
+		<data>
+			<line>            # then mark it visited and enqueue it</line>
+		</data>
+		<data>
+			<line>            for i in self.graph[s]:</line>
+		</data>
+		<data>
+			<line>                if visited[i] == False:</line>
+		</data>
+		<data>
+			<line>                    queue.append(i)</line>
+		</data>
+		<data>
+			<line>                    visited[i] = True</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line># Driver code</line>
+		</data>
+		<data>
+			<line>if __name__ == '__main__':</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    # Create a graph given in</line>
+		</data>
+		<data>
+			<line>    # the above diagram</line>
+		</data>
+		<data>
+			<line>    g = Graph()</line>
+		</data>
+		<data>
+			<line>    g.addEdge(0, 1)</line>
+		</data>
+		<data>
+			<line>    g.addEdge(0, 2)</line>
+		</data>
+		<data>
+			<line>    g.addEdge(1, 2)</line>
+		</data>
+		<data>
+			<line>    g.addEdge(2, 0)</line>
+		</data>
+		<data>
+			<line>    g.addEdge(2, 3)</line>
+		</data>
+		<data>
+			<line>    g.addEdge(3, 3)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    print("Following is Breadth First Traversal"</line>
+		</data>
+		<data>
+			<line>        " (starting from vertex 2)")</line>
+		</data>
+		<data>
+			<line>    g.BFS(2)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+	</algorithm>
+	<algorithm id="bfs_javascript">
+		<data>
+			<line>// Javacript Program to print BFS traversal from a given</line>
+		</data>
+		<data>
+			<line>// source vertex. BFS(int s) traverses vertices</line>
+		</data>
+		<data>
+			<line>// reachable from s.</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>// This class represents a directed graph using</line>
+		</data>
+		<data>
+			<line>// adjacency list representation</line>
+		</data>
+		<data>
+			<line>class Graph</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    // Constructor</line>
+		</data>
+		<data>
+			<line>    constructor(v)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        this.V = v;</line>
+		</data>
+		<data>
+			<line>        this.adj = new Array(v);</line>
+		</data>
+		<data>
+			<line>        for(let i = 0; i &lt; v; i++)</line>
+		</data>
+		<data>
+			<line>            this.adj[i] = [];</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    // Function to add an edge into the graph</line>
+		</data>
+		<data>
+			<line>    addEdge(v, w)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        // Add w to v's list.</line>
+		</data>
+		<data>
+			<line>        this.adj[v].push(w);</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    // Prints BFS traversal from a given source s</line>
+		</data>
+		<data>
+			<line>    BFS(s)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        // Mark all the vertices as not visited(By default</line>
+		</data>
+		<data>
+			<line>        // set as false)</line>
+		</data>
+		<data>
+			<line>        let visited = new Array(this.V);</line>
+		</data>
+		<data>
+			<line>        for(let i = 0; i &lt; this.V; i++)</line>
+		</data>
+		<data>
+			<line>            visited[i] = false;</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>        // Create a queue for BFS</line>
+		</data>
+		<data>
+			<line>        let queue=[];</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>        // Mark the current node as visited and enqueue it</line>
+		</data>
+		<data>
+			<line>        visited[s]=true;</line>
+		</data>
+		<data>
+			<line>        queue.push(s);</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>        while(queue.length &gt; 0)</line>
+		</data>
+		<data>
+			<line>        {</line>
+		</data>
+		<data>
+			<line>            // Dequeue a vertex from queue and print it</line>
+		</data>
+		<data>
+			<line>            s = queue[0];</line>
+		</data>
+		<data>
+			<line>            console.log(s+" ");</line>
+		</data>
+		<data>
+			<line>            queue.shift();</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>            // Get all adjacent vertices of the dequeued</line>
+		</data>
+		<data>
+			<line>            // vertex s.</line>
+		</data>
+		<data>
+			<line>            // If an adjacent has not been visited,</line>
+		</data>
+		<data>
+			<line>            // then mark it visited and enqueue it</line>
+		</data>
+		<data>
+			<line>            this.adj[s].forEach((adjacent,i) = &gt; {</line>
+		</data>
+		<data>
+			<line>                if(!visited[adjacent])</line>
+		</data>
+		<data>
+			<line>                {</line>
+		</data>
+		<data>
+			<line>                    visited[adjacent]=true;</line>
+		</data>
+		<data>
+			<line>                    queue.push(adjacent);</line>
+		</data>
+		<data>
+			<line>                }</line>
+		</data>
+		<data>
+			<line>            });</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>// Driver program to test methods of graph class</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    // Create a graph given in the above diagram</line>
+		</data>
+		<data>
+			<line>    g = new Graph(4);</line>
+		</data>
+		<data>
+			<line>    g.addEdge(0, 1);</line>
+		</data>
+		<data>
+			<line>    g.addEdge(0, 2);</line>
+		</data>
+		<data>
+			<line>    g.addEdge(1, 2);</line>
+		</data>
+		<data>
+			<line>    g.addEdge(2, 0);</line>
+		</data>
+		<data>
+			<line>    g.addEdge(2, 3);</line>
+		</data>
+		<data>
+			<line>    g.addEdge(3, 3);</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    console.log("Following is Breadth First Traversal " +</line>
+		</data>
+		<data>
+			<line>                "(starting from vertex 2) ");</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    g.BFS(2);</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+	</algorithm>
+	<algorithm id="dfs_c">
+		<data>
+			<line>// DFS algorithm in C</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>#include &lt; stdio.h &gt; </line>
+		</data>
+		<data>
+			<line>#include &lt; stdlib.h &gt; </line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>struct node {</line>
+		</data>
+		<data>
+			<line>  int vertex;</line>
+		</data>
+		<data>
+			<line>  struct node* next;</line>
+		</data>
+		<data>
+			<line>};</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>struct node* createNode(int v);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>struct Graph {</line>
+		</data>
+		<data>
+			<line>  int numVertices;</line>
+		</data>
+		<data>
+			<line>  int* visited;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>  // We need int** to store a two dimensional array.</line>
+		</data>
+		<data>
+			<line>  // Similary, we need struct node** to store an array of Linked lists</line>
+		</data>
+		<data>
+			<line>  struct node** adjLists;</line>
+		</data>
+		<data>
+			<line>};</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// DFS algo</line>
+		</data>
+		<data>
+			<line>void DFS(struct Graph* graph, int vertex) {</line>
+		</data>
+		<data>
+			<line>  struct node* adjList = graph-&gt;adjLists[vertex];</line>
+		</data>
+		<data>
+			<line>  struct node* temp = adjList;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>  graph-&gt;visited[vertex] = 1;</line>
+		</data>
+		<data>
+			<line>  printf("Visited %d \n", vertex);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>  while (temp != NULL) {</line>
+		</data>
+		<data>
+			<line>    int connectedVertex = temp-&gt;vertex;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    if (graph-&gt;visited[connectedVertex] == 0) {</line>
+		</data>
+		<data>
+			<line>      DFS(graph, connectedVertex);</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line>    temp = temp-&gt;next;</line>
+		</data>
+		<data>
+			<line>  }</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Create a node</line>
+		</data>
+		<data>
+			<line>struct node* createNode(int v) {</line>
+		</data>
+		<data>
+			<line>  struct node* newNode = malloc(sizeof(struct node));</line>
+		</data>
+		<data>
+			<line>  newNode-&gt;vertex = v;</line>
+		</data>
+		<data>
+			<line>  newNode-&gt;next = NULL;</line>
+		</data>
+		<data>
+			<line>  return newNode;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Create graph</line>
+		</data>
+		<data>
+			<line>struct Graph* createGraph(int vertices) {</line>
+		</data>
+		<data>
+			<line>  struct Graph* graph = malloc(sizeof(struct Graph));</line>
+		</data>
+		<data>
+			<line>  graph-&gt;numVertices = vertices;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>  graph-&gt;adjLists = malloc(vertices * sizeof(struct node*));</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>  graph-&gt;visited = malloc(vertices * sizeof(int));</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>  int i;</line>
+		</data>
+		<data>
+			<line>  for (i = 0; i &lt; vertices; i++) {</line>
+		</data>
+		<data>
+			<line>    graph-&gt;adjLists[i] = NULL;</line>
+		</data>
+		<data>
+			<line>    graph-&gt;visited[i] = 0;</line>
+		</data>
+		<data>
+			<line>  }</line>
+		</data>
+		<data>
+			<line>  return graph;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Add edge</line>
+		</data>
+		<data>
+			<line>void addEdge(struct Graph* graph, int src, int dest) {</line>
+		</data>
+		<data>
+			<line>  // Add edge from src to dest</line>
+		</data>
+		<data>
+			<line>  struct node* newNode = createNode(dest);</line>
+		</data>
+		<data>
+			<line>  newNode-&gt;next = graph-&gt;adjLists[src];</line>
+		</data>
+		<data>
+			<line>  graph-&gt;adjLists[src] = newNode;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>  // Add edge from dest to src</line>
+		</data>
+		<data>
+			<line>  newNode = createNode(src);</line>
+		</data>
+		<data>
+			<line>  newNode-&gt;next = graph-&gt;adjLists[dest];</line>
+		</data>
+		<data>
+			<line>  graph-&gt;adjLists[dest] = newNode;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Print the graph</line>
+		</data>
+		<data>
+			<line>void printGraph(struct Graph* graph) {</line>
+		</data>
+		<data>
+			<line>  int v;</line>
+		</data>
+		<data>
+			<line>  for (v = 0; v &lt; graph-&gt;numVertices; v++) {</line>
+		</data>
+		<data>
+			<line>    struct node* temp = graph-&gt;adjLists[v];</line>
+		</data>
+		<data>
+			<line>    printf("\n Adjacency list of vertex %d\n ", v);</line>
+		</data>
+		<data>
+			<line>    while (temp) {</line>
+		</data>
+		<data>
+			<line>      printf("%d -&gt; ", temp-&gt;vertex);</line>
+		</data>
+		<data>
+			<line>      temp = temp-&gt;next;</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line>    printf("\n");</line>
+		</data>
+		<data>
+			<line>  }</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>int main() {</line>
+		</data>
+		<data>
+			<line>  struct Graph* graph = createGraph(4);</line>
+		</data>
+		<data>
+			<line>  addEdge(graph, 0, 1);</line>
+		</data>
+		<data>
+			<line>  addEdge(graph, 0, 2);</line>
+		</data>
+		<data>
+			<line>  addEdge(graph, 1, 2);</line>
+		</data>
+		<data>
+			<line>  addEdge(graph, 2, 3);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>  printGraph(graph);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>  DFS(graph, 2);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>  return 0;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+	</algorithm>
+	<algorithm id="dfs_cpp">
+		<data>
+			<line>// DFS algorithm in C++</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>#include &lt; iostream &gt; </line>
+		</data>
+		<data>
+			<line>#include &lt; list &gt; </line>
+		</data>
+		<data>
+			<line>using namespace std;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>class Graph {</line>
+		</data>
+		<data>
+			<line>  int numVertices;</line>
+		</data>
+		<data>
+			<line>  list &lt; int &gt; *adjLists;</line>
+		</data>
+		<data>
+			<line>  bool *visited;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>   public:</line>
+		</data>
+		<data>
+			<line>  Graph(int V);</line>
+		</data>
+		<data>
+			<line>  void addEdge(int src, int dest);</line>
+		</data>
+		<data>
+			<line>  void DFS(int vertex);</line>
+		</data>
+		<data>
+			<line>};</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Initialize graph</line>
+		</data>
+		<data>
+			<line>Graph::Graph(int vertices) {</line>
+		</data>
+		<data>
+			<line>  numVertices = vertices;</line>
+		</data>
+		<data>
+			<line>  adjLists = new list &lt; int &gt; [vertices];</line>
+		</data>
+		<data>
+			<line>  visited = new bool[vertices];</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Add edges</line>
+		</data>
+		<data>
+			<line>void Graph::addEdge(int src, int dest) {</line>
+		</data>
+		<data>
+			<line>  adjLists[src].push_front(dest);</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// DFS algorithm</line>
+		</data>
+		<data>
+			<line>void Graph::DFS(int vertex) {</line>
+		</data>
+		<data>
+			<line>  visited[vertex] = true;</line>
+		</data>
+		<data>
+			<line>  list &lt; int &gt; adjList = adjLists[vertex];</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>  cout &lt;&lt; vertex &lt;&lt; " ";</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>  list &lt; int &gt;::iterator i;</line>
+		</data>
+		<data>
+			<line>  for (i = adjList.begin(); i != adjList.end(); ++i)</line>
+		</data>
+		<data>
+			<line>    if (!visited[*i])</line>
+		</data>
+		<data>
+			<line>      DFS(*i);</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>int main() {</line>
+		</data>
+		<data>
+			<line>  Graph g(4);</line>
+		</data>
+		<data>
+			<line>  g.addEdge(0, 1);</line>
+		</data>
+		<data>
+			<line>  g.addEdge(0, 2);</line>
+		</data>
+		<data>
+			<line>  g.addEdge(1, 2);</line>
+		</data>
+		<data>
+			<line>  g.addEdge(2, 3);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>  g.DFS(2);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>  return 0;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+	</algorithm>
+	<algorithm id="dfs_java">
+		<data>
+			<line>// Java program to print DFS traversal</line>
+		</data>
+		<data>
+			<line>// from a given graph</line>
+		</data>
+		<data>
+			<line>import java.io.*;</line>
+		</data>
+		<data>
+			<line>import java.util.*;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// This class represents a</line>
+		</data>
+		<data>
+			<line>// directed graph using adjacency</line>
+		</data>
+		<data>
+			<line>// list representation</line>
+		</data>
+		<data>
+			<line>class Graph {</line>
+		</data>
+		<data>
+			<line>    private int V;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Array of lists for</line>
+		</data>
+		<data>
+			<line>    // Adjacency List Representation</line>
+		</data>
+		<data>
+			<line>    private LinkedList &lt; Integer &gt; adj[];</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Constructor</line>
+		</data>
+		<data>
+			<line>    @SuppressWarnings("unchecked") Graph(int v)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        V = v;</line>
+		</data>
+		<data>
+			<line>        adj = new LinkedList[v];</line>
+		</data>
+		<data>
+			<line>        for (int i = 0; i &lt; v; ++i)</line>
+		</data>
+		<data>
+			<line>            adj[i] = new LinkedList();</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Function to add an edge into the graph</line>
+		</data>
+		<data>
+			<line>    void addEdge(int v, int w)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        // Add w to v's list.</line>
+		</data>
+		<data>
+			<line>        adj[v].add(w);</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // A function used by DFS</line>
+		</data>
+		<data>
+			<line>    void DFSUtil(int v, boolean visited[])</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        // Mark the current node as visited and print it</line>
+		</data>
+		<data>
+			<line>        visited[v] = true;</line>
+		</data>
+		<data>
+			<line>        System.out.print(v + " ");</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Recur for all the vertices adjacent to this</line>
+		</data>
+		<data>
+			<line>        // vertex</line>
+		</data>
+		<data>
+			<line>        Iterator &lt; Integer &gt; i = adj[v].listIterator();</line>
+		</data>
+		<data>
+			<line>        while (i.hasNext()) {</line>
+		</data>
+		<data>
+			<line>            int n = i.next();</line>
+		</data>
+		<data>
+			<line>            if (!visited[n])</line>
+		</data>
+		<data>
+			<line>                DFSUtil(n, visited);</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // The function to do DFS traversal.</line>
+		</data>
+		<data>
+			<line>    // It uses recursive DFSUtil()</line>
+		</data>
+		<data>
+			<line>    void DFS(int v)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        // Mark all the vertices as</line>
+		</data>
+		<data>
+			<line>        // not visited(set as</line>
+		</data>
+		<data>
+			<line>        // false by default in java)</line>
+		</data>
+		<data>
+			<line>        boolean visited[] = new boolean[V];</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Call the recursive helper</line>
+		</data>
+		<data>
+			<line>        // function to print DFS</line>
+		</data>
+		<data>
+			<line>        // traversal</line>
+		</data>
+		<data>
+			<line>        DFSUtil(v, visited);</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Driver Code</line>
+		</data>
+		<data>
+			<line>    public static void main(String args[])</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        Graph g = new Graph(4);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        g.addEdge(0, 1);</line>
+		</data>
+		<data>
+			<line>        g.addEdge(0, 2);</line>
+		</data>
+		<data>
+			<line>        g.addEdge(1, 2);</line>
+		</data>
+		<data>
+			<line>        g.addEdge(2, 0);</line>
+		</data>
+		<data>
+			<line>        g.addEdge(2, 3);</line>
+		</data>
+		<data>
+			<line>        g.addEdge(3, 3);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        System.out.println(</line>
+		</data>
+		<data>
+			<line>            "Following is Depth First Traversal "</line>
+		</data>
+		<data>
+			<line>            + "(starting from vertex 2)");</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Function call</line>
+		</data>
+		<data>
+			<line>        g.DFS(2);</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+	</algorithm>
+	<algorithm id="dfs_python3">
+		<data>
+			<line># Python3 program to print DFS traversal</line>
+		</data>
+		<data>
+			<line># from a given graph</line>
+		</data>
+		<data>
+			<line>from collections import defaultdict</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line># This class represents a directed graph using</line>
+		</data>
+		<data>
+			<line># adjacency list representation</line>
+		</data>
+		<data>
+			<line>class Graph:</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    # Constructor</line>
+		</data>
+		<data>
+			<line>    def __init__(self):</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        # Default dictionary to store graph</line>
+		</data>
+		<data>
+			<line>        self.graph = defaultdict(list)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    # Function to add an edge to graph</line>
+		</data>
+		<data>
+			<line>    def addEdge(self, u, v):</line>
+		</data>
+		<data>
+			<line>        self.graph[u].append(v)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    # A function used by DFS</line>
+		</data>
+		<data>
+			<line>    def DFSUtil(self, v, visited):</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        # Mark the current node as visited</line>
+		</data>
+		<data>
+			<line>        # and print it</line>
+		</data>
+		<data>
+			<line>        visited.add(v)</line>
+		</data>
+		<data>
+			<line>        print(v, end=' ')</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        # Recur for all the vertices</line>
+		</data>
+		<data>
+			<line>        # adjacent to this vertex</line>
+		</data>
+		<data>
+			<line>        for neighbour in self.graph[v]:</line>
+		</data>
+		<data>
+			<line>            if neighbour not in visited:</line>
+		</data>
+		<data>
+			<line>                self.DFSUtil(neighbour, visited)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    # The function to do DFS traversal. It uses</line>
+		</data>
+		<data>
+			<line>    # recursive DFSUtil()</line>
+		</data>
+		<data>
+			<line>    def DFS(self, v):</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        # Create a set to store visited vertices</line>
+		</data>
+		<data>
+			<line>        visited = set()</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        # Call the recursive helper function</line>
+		</data>
+		<data>
+			<line>        # to print DFS traversal</line>
+		</data>
+		<data>
+			<line>        self.DFSUtil(v, visited)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line># Driver's code</line>
+		</data>
+		<data>
+			<line>if __name__ == "__main__":</line>
+		</data>
+		<data>
+			<line>    g = Graph()</line>
+		</data>
+		<data>
+			<line>    g.addEdge(0, 1)</line>
+		</data>
+		<data>
+			<line>    g.addEdge(0, 2)</line>
+		</data>
+		<data>
+			<line>    g.addEdge(1, 2)</line>
+		</data>
+		<data>
+			<line>    g.addEdge(2, 0)</line>
+		</data>
+		<data>
+			<line>    g.addEdge(2, 3)</line>
+		</data>
+		<data>
+			<line>    g.addEdge(3, 3)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    print("Following is Depth First Traversal (starting from vertex 2)")</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    # Function call</line>
+		</data>
+		<data>
+			<line>    g.DFS(2)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+	</algorithm>
+	<algorithm id="dfs_javascript">
+		<data>
+			<line>// Javascript program to print DFS</line>
+		</data>
+		<data>
+			<line>// traversal from a given</line>
+		</data>
+		<data>
+			<line>// graph</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// This class represents a</line>
+		</data>
+		<data>
+			<line>// directed graph using adjacency</line>
+		</data>
+		<data>
+			<line>// list representation</line>
+		</data>
+		<data>
+			<line>class Graph</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    // Constructor</line>
+		</data>
+		<data>
+			<line>    constructor(v)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        this.V = v;</line>
+		</data>
+		<data>
+			<line>        this.adj = new Array(v);</line>
+		</data>
+		<data>
+			<line>        for(let i = 0; i &lt; v; i++)</line>
+		</data>
+		<data>
+			<line>            this.adj[i] = [];</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    // Function to add an edge into the graph</line>
+		</data>
+		<data>
+			<line>    addEdge(v, w)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>        // Add w to v's list.</line>
+		</data>
+		<data>
+			<line>        this.adj[v].push(w);</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    // A function used by DFS</line>
+		</data>
+		<data>
+			<line>    DFSUtil(v, visited)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>        // Mark the current node as visited and print it</line>
+		</data>
+		<data>
+			<line>        visited[v] = true;</line>
+		</data>
+		<data>
+			<line>        console.log(v + " ");</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Recur for all the vertices adjacent to this</line>
+		</data>
+		<data>
+			<line>        // vertex</line>
+		</data>
+		<data>
+			<line>        for(let i of this.adj[v].values())</line>
+		</data>
+		<data>
+			<line>        {</line>
+		</data>
+		<data>
+			<line>            let n = i</line>
+		</data>
+		<data>
+			<line>            if (!visited[n])</line>
+		</data>
+		<data>
+			<line>                this.DFSUtil(n, visited);</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    // The function to do DFS traversal.</line>
+		</data>
+		<data>
+			<line>    // It uses recursive</line>
+		</data>
+		<data>
+			<line>    // DFSUtil()</line>
+		</data>
+		<data>
+			<line>    DFS(v)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>        // Mark all the vertices as</line>
+		</data>
+		<data>
+			<line>        // not visited(set as</line>
+		</data>
+		<data>
+			<line>        // false by default in java)</line>
+		</data>
+		<data>
+			<line>        let visited = new Array(this.V);</line>
+		</data>
+		<data>
+			<line>        for(let i = 0; i &lt; this.V; i++)</line>
+		</data>
+		<data>
+			<line>            visited[i] = false;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Call the recursive helper</line>
+		</data>
+		<data>
+			<line>        // function to print DFS</line>
+		</data>
+		<data>
+			<line>        // traversal</line>
+		</data>
+		<data>
+			<line>        this.DFSUtil(v, visited);</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Driver Code</line>
+		</data>
+		<data>
+			<line>g = new Graph(4);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>g.addEdge(0, 1);</line>
+		</data>
+		<data>
+			<line>g.addEdge(0, 2);</line>
+		</data>
+		<data>
+			<line>g.addEdge(1, 2);</line>
+		</data>
+		<data>
+			<line>g.addEdge(2, 0);</line>
+		</data>
+		<data>
+			<line>g.addEdge(2, 3);</line>
+		</data>
+		<data>
+			<line>g.addEdge(3, 3);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>console.log("Following is Depth First Traversal " +</line>
+		</data>
+		<data>
+			<line>            "(starting from vertex 2)");</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>g.DFS(2);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+	</algorithm>
+	<algorithm id="dijkstra_c">
+		<data>
+			<line>// C program for Dijkstra's single source shortest path</line>
+		</data>
+		<data>
+			<line>// algorithm. The program is for adjacency matrix</line>
+		</data>
+		<data>
+			<line>// representation of the graph</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>#include &lt; limits.h &gt;</line>
+		</data>
+		<data>
+			<line>#include &lt; stdbool.h &gt;</line>
+		</data>
+		<data>
+			<line>#include &lt; stdio.h &gt;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Number of vertices in the graph</line>
+		</data>
+		<data>
+			<line>#define V 9</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// A utility function to find the vertex with minimum</line>
+		</data>
+		<data>
+			<line>// distance value, from the set of vertices not yet included</line>
+		</data>
+		<data>
+			<line>// in shortest path tree</line>
+		</data>
+		<data>
+			<line>int minDistance(int dist[], bool sptSet[])</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    // Initialize min value</line>
+		</data>
+		<data>
+			<line>    int min = INT_MAX, min_index;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    for (int v = 0; v &lt; V; v++)</line>
+		</data>
+		<data>
+			<line>        if (sptSet[v] == false &amp;&amp; dist[v] &lt;= min)</line>
+		</data>
+		<data>
+			<line>            min = dist[v], min_index = v;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    return min_index;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// A utility function to print the constructed distance</line>
+		</data>
+		<data>
+			<line>// array</line>
+		</data>
+		<data>
+			<line>void printSolution(int dist[])</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    printf("Vertex \t\t Distance from Source\n");</line>
+		</data>
+		<data>
+			<line>    for (int i = 0; i &lt; V; i++)</line>
+		</data>
+		<data>
+			<line>        printf("%d \t\t\t\t %d\n", i, dist[i]);</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Function that implements Dijkstra's single source</line>
+		</data>
+		<data>
+			<line>// shortest path algorithm for a graph represented using</line>
+		</data>
+		<data>
+			<line>// adjacency matrix representation</line>
+		</data>
+		<data>
+			<line>void dijkstra(int graph[V][V], int src)</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    int dist[V]; // The output array. dist[i] will hold the</line>
+		</data>
+		<data>
+			<line>                // shortest</line>
+		</data>
+		<data>
+			<line>    // distance from src to i</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    bool sptSet[V]; // sptSet[i] will be true if vertex i is</line>
+		</data>
+		<data>
+			<line>                    // included in shortest</line>
+		</data>
+		<data>
+			<line>    // path tree or shortest distance from src to i is</line>
+		</data>
+		<data>
+			<line>    // finalized</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Initialize all distances as INFINITE and stpSet[] as</line>
+		</data>
+		<data>
+			<line>    // false</line>
+		</data>
+		<data>
+			<line>    for (int i = 0; i &lt; V; i++)</line>
+		</data>
+		<data>
+			<line>        dist[i] = INT_MAX, sptSet[i] = false;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Distance of source vertex from itself is always 0</line>
+		</data>
+		<data>
+			<line>    dist[src] = 0;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Find shortest path for all vertices</line>
+		</data>
+		<data>
+			<line>    for (int count = 0; count &lt; V - 1; count++) {</line>
+		</data>
+		<data>
+			<line>        // Pick the minimum distance vertex from the set of</line>
+		</data>
+		<data>
+			<line>        // vertices not yet processed. u is always equal to</line>
+		</data>
+		<data>
+			<line>        // src in the first iteration.</line>
+		</data>
+		<data>
+			<line>        int u = minDistance(dist, sptSet);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Mark the picked vertex as processed</line>
+		</data>
+		<data>
+			<line>        sptSet[u] = true;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Update dist value of the adjacent vertices of the</line>
+		</data>
+		<data>
+			<line>        // picked vertex.</line>
+		</data>
+		<data>
+			<line>        for (int v = 0; v &lt; V; v++)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>            // Update dist[v] only if is not in sptSet,</line>
+		</data>
+		<data>
+			<line>            // there is an edge from u to v, and total</line>
+		</data>
+		<data>
+			<line>            // weight of path from src to v through u is</line>
+		</data>
+		<data>
+			<line>            // smaller than current value of dist[v]</line>
+		</data>
+		<data>
+			<line>            if (!sptSet[v] &amp;&amp; graph[u][v]</line>
+		</data>
+		<data>
+			<line>                &amp;&amp; dist[u] != INT_MAX</line>
+		</data>
+		<data>
+			<line>                &amp;&amp; dist[u] + graph[u][v] &lt; dist[v])</line>
+		</data>
+		<data>
+			<line>                dist[v] = dist[u] + graph[u][v];</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // print the constructed distance array</line>
+		</data>
+		<data>
+			<line>    printSolution(dist);</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// driver's code</line>
+		</data>
+		<data>
+			<line>int main()</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    /* Let us create the example graph discussed above */</line>
+		</data>
+		<data>
+			<line>    int graph[V][V] = { { 0, 4, 0, 0, 0, 0, 0, 8, 0 },</line>
+		</data>
+		<data>
+			<line>                        { 4, 0, 8, 0, 0, 0, 0, 11, 0 },</line>
+		</data>
+		<data>
+			<line>                        { 0, 8, 0, 7, 0, 4, 0, 0, 2 },</line>
+		</data>
+		<data>
+			<line>                        { 0, 0, 7, 0, 9, 14, 0, 0, 0 },</line>
+		</data>
+		<data>
+			<line>                        { 0, 0, 0, 9, 0, 10, 0, 0, 0 },</line>
+		</data>
+		<data>
+			<line>                        { 0, 0, 4, 14, 10, 0, 2, 0, 0 },</line>
+		</data>
+		<data>
+			<line>                        { 0, 0, 0, 0, 0, 2, 0, 1, 6 },</line>
+		</data>
+		<data>
+			<line>                        { 8, 11, 0, 0, 0, 0, 1, 0, 7 },</line>
+		</data>
+		<data>
+			<line>                        { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Function call</line>
+		</data>
+		<data>
+			<line>    dijkstra(graph, 0);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    return 0;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+	</algorithm>
+	<algorithm id="dijkstra_cpp">
+		<data>
+			<line>// C++ program for Dijkstra's single source shortest path</line>
+		</data>
+		<data>
+			<line>// algorithm. The program is for adjacency matrix</line>
+		</data>
+		<data>
+			<line>// representation of the graph</line>
+		</data>
+		<data>
+			<line>#include &lt; iostream &gt;</line>
+		</data>
+		<data>
+			<line>using namespace std;</line>
+		</data>
+		<data>
+			<line>#include &lt; limits.h &gt;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Number of vertices in the graph</line>
+		</data>
+		<data>
+			<line>#define V 9</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// A utility function to find the vertex with minimum</line>
+		</data>
+		<data>
+			<line>// distance value, from the set of vertices not yet included</line>
+		</data>
+		<data>
+			<line>// in shortest path tree</line>
+		</data>
+		<data>
+			<line>int minDistance(int dist[], bool sptSet[])</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Initialize min value</line>
+		</data>
+		<data>
+			<line>    int min = INT_MAX, min_index;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    for (int v = 0; v &lt; V; v++)</line>
+		</data>
+		<data>
+			<line>        if (sptSet[v] == false &amp;&amp; dist[v] &lt;= min)</line>
+		</data>
+		<data>
+			<line>            min = dist[v], min_index = v;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    return min_index;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// A utility function to print the constructed distance</line>
+		</data>
+		<data>
+			<line>// array</line>
+		</data>
+		<data>
+			<line>void printSolution(int dist[])</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    cout &lt;&lt; "Vertex \t Distance from Source" &lt;&lt; endl;</line>
+		</data>
+		<data>
+			<line>    for (int i = 0; i &lt; V; i++)</line>
+		</data>
+		<data>
+			<line>        cout &lt;&lt; i &lt;&lt; " \t\t\t\t" &lt;&lt; dist[i] &lt;&lt; endl;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Function that implements Dijkstra's single source</line>
+		</data>
+		<data>
+			<line>// shortest path algorithm for a graph represented using</line>
+		</data>
+		<data>
+			<line>// adjacency matrix representation</line>
+		</data>
+		<data>
+			<line>void dijkstra(int graph[V][V], int src)</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    int dist[V]; // The output array. dist[i] will hold the</line>
+		</data>
+		<data>
+			<line>                // shortest</line>
+		</data>
+		<data>
+			<line>    // distance from src to i</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    bool sptSet[V]; // sptSet[i] will be true if vertex i is</line>
+		</data>
+		<data>
+			<line>                    // included in shortest</line>
+		</data>
+		<data>
+			<line>    // path tree or shortest distance from src to i is</line>
+		</data>
+		<data>
+			<line>    // finalized</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Initialize all distances as INFINITE and stpSet[] as</line>
+		</data>
+		<data>
+			<line>    // false</line>
+		</data>
+		<data>
+			<line>    for (int i = 0; i &lt; V; i++)</line>
+		</data>
+		<data>
+			<line>        dist[i] = INT_MAX, sptSet[i] = false;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Distance of source vertex from itself is always 0</line>
+		</data>
+		<data>
+			<line>    dist[src] = 0;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Find shortest path for all vertices</line>
+		</data>
+		<data>
+			<line>    for (int count = 0; count &lt; V - 1; count++) {</line>
+		</data>
+		<data>
+			<line>        // Pick the minimum distance vertex from the set of</line>
+		</data>
+		<data>
+			<line>        // vertices not yet processed. u is always equal to</line>
+		</data>
+		<data>
+			<line>        // src in the first iteration.</line>
+		</data>
+		<data>
+			<line>        int u = minDistance(dist, sptSet);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Mark the picked vertex as processed</line>
+		</data>
+		<data>
+			<line>        sptSet[u] = true;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Update dist value of the adjacent vertices of the</line>
+		</data>
+		<data>
+			<line>        // picked vertex.</line>
+		</data>
+		<data>
+			<line>        for (int v = 0; v &lt; V; v++)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>            // Update dist[v] only if is not in sptSet,</line>
+		</data>
+		<data>
+			<line>            // there is an edge from u to v, and total</line>
+		</data>
+		<data>
+			<line>            // weight of path from src to v through u is</line>
+		</data>
+		<data>
+			<line>            // smaller than current value of dist[v]</line>
+		</data>
+		<data>
+			<line>            if (!sptSet[v] &amp;&amp; graph[u][v]</line>
+		</data>
+		<data>
+			<line>                &amp;&amp; dist[u] != INT_MAX</line>
+		</data>
+		<data>
+			<line>                &amp;&amp; dist[u] + graph[u][v] &lt; dist[v])</line>
+		</data>
+		<data>
+			<line>                dist[v] = dist[u] + graph[u][v];</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // print the constructed distance array</line>
+		</data>
+		<data>
+			<line>    printSolution(dist);</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// driver's code</line>
+		</data>
+		<data>
+			<line>int main()</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    /* Let us create the example graph discussed above */</line>
+		</data>
+		<data>
+			<line>    int graph[V][V] = { { 0, 4, 0, 0, 0, 0, 0, 8, 0 },</line>
+		</data>
+		<data>
+			<line>                        { 4, 0, 8, 0, 0, 0, 0, 11, 0 },</line>
+		</data>
+		<data>
+			<line>                        { 0, 8, 0, 7, 0, 4, 0, 0, 2 },</line>
+		</data>
+		<data>
+			<line>                        { 0, 0, 7, 0, 9, 14, 0, 0, 0 },</line>
+		</data>
+		<data>
+			<line>                        { 0, 0, 0, 9, 0, 10, 0, 0, 0 },</line>
+		</data>
+		<data>
+			<line>                        { 0, 0, 4, 14, 10, 0, 2, 0, 0 },</line>
+		</data>
+		<data>
+			<line>                        { 0, 0, 0, 0, 0, 2, 0, 1, 6 },</line>
+		</data>
+		<data>
+			<line>                        { 8, 11, 0, 0, 0, 0, 1, 0, 7 },</line>
+		</data>
+		<data>
+			<line>                        { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Function call</line>
+		</data>
+		<data>
+			<line>    dijkstra(graph, 0);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    return 0;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+	</algorithm>
+	<algorithm id="dijkstra_java">
+		<data>
+			<line>// A Java program for Dijkstra's single source shortest path</line>
+		</data>
+		<data>
+			<line>// algorithm. The program is for adjacency matrix</line>
+		</data>
+		<data>
+			<line>// representation of the graph</line>
+		</data>
+		<data>
+			<line>import java.io.*;</line>
+		</data>
+		<data>
+			<line>import java.lang.*;</line>
+		</data>
+		<data>
+			<line>import java.util.*;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>class ShortestPath {</line>
+		</data>
+		<data>
+			<line>    // A utility function to find the vertex with minimum</line>
+		</data>
+		<data>
+			<line>    // distance value, from the set of vertices not yet</line>
+		</data>
+		<data>
+			<line>    // included in shortest path tree</line>
+		</data>
+		<data>
+			<line>    static final int V = 9;</line>
+		</data>
+		<data>
+			<line>    int minDistance(int dist[], Boolean sptSet[])</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        // Initialize min value</line>
+		</data>
+		<data>
+			<line>        int min = Integer.MAX_VALUE, min_index = -1;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        for (int v = 0; v &lt; V; v++)</line>
+		</data>
+		<data>
+			<line>            if (sptSet[v] == false &amp;&amp; dist[v] &lt;= min) {</line>
+		</data>
+		<data>
+			<line>                min = dist[v];</line>
+		</data>
+		<data>
+			<line>                min_index = v;</line>
+		</data>
+		<data>
+			<line>            }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        return min_index;</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // A utility function to print the constructed distance</line>
+		</data>
+		<data>
+			<line>    // array</line>
+		</data>
+		<data>
+			<line>    void printSolution(int dist[])</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        System.out.println(</line>
+		</data>
+		<data>
+			<line>            "Vertex \t\t Distance from Source");</line>
+		</data>
+		<data>
+			<line>        for (int i = 0; i &lt; V; i++)</line>
+		</data>
+		<data>
+			<line>            System.out.println(i + " \t\t " + dist[i]);</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Function that implements Dijkstra's single source</line>
+		</data>
+		<data>
+			<line>    // shortest path algorithm for a graph represented using</line>
+		</data>
+		<data>
+			<line>    // adjacency matrix representation</line>
+		</data>
+		<data>
+			<line>    void dijkstra(int graph[][], int src)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        int dist[] = new int[V]; // The output array.</line>
+		</data>
+		<data>
+			<line>                                // dist[i] will hold</line>
+		</data>
+		<data>
+			<line>        // the shortest distance from src to i</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // sptSet[i] will true if vertex i is included in</line>
+		</data>
+		<data>
+			<line>        // shortest path tree or shortest distance from src</line>
+		</data>
+		<data>
+			<line>        // to i is finalized</line>
+		</data>
+		<data>
+			<line>        Boolean sptSet[] = new Boolean[V];</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Initialize all distances as INFINITE and stpSet[]</line>
+		</data>
+		<data>
+			<line>        // as false</line>
+		</data>
+		<data>
+			<line>        for (int i = 0; i &lt; V; i++) {</line>
+		</data>
+		<data>
+			<line>            dist[i] = Integer.MAX_VALUE;</line>
+		</data>
+		<data>
+			<line>            sptSet[i] = false;</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Distance of source vertex from itself is always 0</line>
+		</data>
+		<data>
+			<line>        dist[src] = 0;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Find shortest path for all vertices</line>
+		</data>
+		<data>
+			<line>        for (int count = 0; count &lt; V - 1; count++) {</line>
+		</data>
+		<data>
+			<line>            // Pick the minimum distance vertex from the set</line>
+		</data>
+		<data>
+			<line>            // of vertices not yet processed. u is always</line>
+		</data>
+		<data>
+			<line>            // equal to src in first iteration.</line>
+		</data>
+		<data>
+			<line>            int u = minDistance(dist, sptSet);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>            // Mark the picked vertex as processed</line>
+		</data>
+		<data>
+			<line>            sptSet[u] = true;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>            // Update dist value of the adjacent vertices of</line>
+		</data>
+		<data>
+			<line>            // the picked vertex.</line>
+		</data>
+		<data>
+			<line>            for (int v = 0; v &lt; V; v++)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>                // Update dist[v] only if is not in sptSet,</line>
+		</data>
+		<data>
+			<line>                // there is an edge from u to v, and total</line>
+		</data>
+		<data>
+			<line>                // weight of path from src to v through u is</line>
+		</data>
+		<data>
+			<line>                // smaller than current value of dist[v]</line>
+		</data>
+		<data>
+			<line>                if (!sptSet[v] &amp;&amp; graph[u][v] != 0</line>
+		</data>
+		<data>
+			<line>                    &amp;&amp; dist[u] != Integer.MAX_VALUE</line>
+		</data>
+		<data>
+			<line>                    &amp;&amp; dist[u] + graph[u][v] &lt; dist[v])</line>
+		</data>
+		<data>
+			<line>                    dist[v] = dist[u] + graph[u][v];</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // print the constructed distance array</line>
+		</data>
+		<data>
+			<line>        printSolution(dist);</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Driver's code</line>
+		</data>
+		<data>
+			<line>    public static void main(String[] args)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        /* Let us create the example graph discussed above</line>
+		</data>
+		<data>
+			<line>        */</line>
+		</data>
+		<data>
+			<line>        int graph[][]</line>
+		</data>
+		<data>
+			<line>            = new int[][] { { 0, 4, 0, 0, 0, 0, 0, 8, 0 },</line>
+		</data>
+		<data>
+			<line>                            { 4, 0, 8, 0, 0, 0, 0, 11, 0 },</line>
+		</data>
+		<data>
+			<line>                            { 0, 8, 0, 7, 0, 4, 0, 0, 2 },</line>
+		</data>
+		<data>
+			<line>                            { 0, 0, 7, 0, 9, 14, 0, 0, 0 },</line>
+		</data>
+		<data>
+			<line>                            { 0, 0, 0, 9, 0, 10, 0, 0, 0 },</line>
+		</data>
+		<data>
+			<line>                            { 0, 0, 4, 14, 10, 0, 2, 0, 0 },</line>
+		</data>
+		<data>
+			<line>                            { 0, 0, 0, 0, 0, 2, 0, 1, 6 },</line>
+		</data>
+		<data>
+			<line>                            { 8, 11, 0, 0, 0, 0, 1, 0, 7 },</line>
+		</data>
+		<data>
+			<line>                            { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };</line>
+		</data>
+		<data>
+			<line>        ShortestPath t = new ShortestPath();</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Function call</line>
+		</data>
+		<data>
+			<line>        t.dijkstra(graph, 0);</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+	</algorithm>
+	<algorithm id="dijkstra_python3">
+		<data>
+			<line># Python program for Dijkstra's single</line>
+		</data>
+		<data>
+			<line># source shortest path algorithm. The program is</line>
+		</data>
+		<data>
+			<line># for adjacency matrix representation of the graph</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line># Library for INT_MAX</line>
+		</data>
+		<data>
+			<line>import sys</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>class Graph():</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    def __init__(self, vertices):</line>
+		</data>
+		<data>
+			<line>        self.V = vertices</line>
+		</data>
+		<data>
+			<line>        self.graph = [[0 for column in range(vertices)]</line>
+		</data>
+		<data>
+			<line>                    for row in range(vertices)]</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    def printSolution(self, dist):</line>
+		</data>
+		<data>
+			<line>        print("Vertex \tDistance from Source")</line>
+		</data>
+		<data>
+			<line>        for node in range(self.V):</line>
+		</data>
+		<data>
+			<line>            print(node, "\t", dist[node])</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    # A utility function to find the vertex with</line>
+		</data>
+		<data>
+			<line>    # minimum distance value, from the set of vertices</line>
+		</data>
+		<data>
+			<line>    # not yet included in shortest path tree</line>
+		</data>
+		<data>
+			<line>    def minDistance(self, dist, sptSet):</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        # Initialize minimum distance for next node</line>
+		</data>
+		<data>
+			<line>        min = sys.maxsize</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        # Search not nearest vertex not in the</line>
+		</data>
+		<data>
+			<line>        # shortest path tree</line>
+		</data>
+		<data>
+			<line>        for u in range(self.V):</line>
+		</data>
+		<data>
+			<line>            if dist[u] &lt; min and sptSet[u] == False:</line>
+		</data>
+		<data>
+			<line>                min = dist[u]</line>
+		</data>
+		<data>
+			<line>                min_index = u</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        return min_index</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    # Function that implements Dijkstra's single source</line>
+		</data>
+		<data>
+			<line>    # shortest path algorithm for a graph represented</line>
+		</data>
+		<data>
+			<line>    # using adjacency matrix representation</line>
+		</data>
+		<data>
+			<line>    def dijkstra(self, src):</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        dist = [sys.maxsize] * self.V</line>
+		</data>
+		<data>
+			<line>        dist[src] = 0</line>
+		</data>
+		<data>
+			<line>        sptSet = [False] * self.V</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        for cout in range(self.V):</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>            # Pick the minimum distance vertex from</line>
+		</data>
+		<data>
+			<line>            # the set of vertices not yet processed.</line>
+		</data>
+		<data>
+			<line>            # x is always equal to src in first iteration</line>
+		</data>
+		<data>
+			<line>            x = self.minDistance(dist, sptSet)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>            # Put the minimum distance vertex in the</line>
+		</data>
+		<data>
+			<line>            # shortest path tree</line>
+		</data>
+		<data>
+			<line>            sptSet[x] = True</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>            # Update dist value of the adjacent vertices</line>
+		</data>
+		<data>
+			<line>            # of the picked vertex only if the current</line>
+		</data>
+		<data>
+			<line>            # distance is greater than new distance and</line>
+		</data>
+		<data>
+			<line>            # the vertex in not in the shortest path tree</line>
+		</data>
+		<data>
+			<line>            for y in range(self.V):</line>
+		</data>
+		<data>
+			<line>                if self.graph[x][y] &gt; 0 and sptSet[y] == False and \</line>
+		</data>
+		<data>
+			<line>                        dist[y] &gt; dist[x] + self.graph[x][y]:</line>
+		</data>
+		<data>
+			<line>                    dist[y] = dist[x] + self.graph[x][y]</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        self.printSolution(dist)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line># Driver's code</line>
+		</data>
+		<data>
+			<line>if __name__ == "__main__":</line>
+		</data>
+		<data>
+			<line>    g = Graph(9)</line>
+		</data>
+		<data>
+			<line>    g.graph = [[0, 4, 0, 0, 0, 0, 0, 8, 0],</line>
+		</data>
+		<data>
+			<line>            [4, 0, 8, 0, 0, 0, 0, 11, 0],</line>
+		</data>
+		<data>
+			<line>            [0, 8, 0, 7, 0, 4, 0, 0, 2],</line>
+		</data>
+		<data>
+			<line>            [0, 0, 7, 0, 9, 14, 0, 0, 0],</line>
+		</data>
+		<data>
+			<line>            [0, 0, 0, 9, 0, 10, 0, 0, 0],</line>
+		</data>
+		<data>
+			<line>            [0, 0, 4, 14, 10, 0, 2, 0, 0],</line>
+		</data>
+		<data>
+			<line>            [0, 0, 0, 0, 0, 2, 0, 1, 6],</line>
+		</data>
+		<data>
+			<line>            [8, 11, 0, 0, 0, 0, 1, 0, 7],</line>
+		</data>
+		<data>
+			<line>            [0, 0, 2, 0, 0, 0, 6, 7, 0]</line>
+		</data>
+		<data>
+			<line>            ]</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    g.dijkstra(0)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+	</algorithm>
+	<algorithm id="dijkstra_javascript">
+		<data>
+			<line>// A Javascript program for Dijkstra's single</line>
+		</data>
+		<data>
+			<line>// source shortest path algorithm.</line>
+		</data>
+		<data>
+			<line>// The program is for adjacency matrix</line>
+		</data>
+		<data>
+			<line>// representation of the graph    </line>
+		</data>
+		<data>
+			<line>let V = 9;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// A utility function to find the</line>
+		</data>
+		<data>
+			<line>// vertex with minimum distance</line>
+		</data>
+		<data>
+			<line>// value, from the set of vertices</line>
+		</data>
+		<data>
+			<line>// not yet included in shortest</line>
+		</data>
+		<data>
+			<line>// path tree</line>
+		</data>
+		<data>
+			<line>function minDistance(dist,sptSet)</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    // Initialize min value</line>
+		</data>
+		<data>
+			<line>    let min = Number.MAX_VALUE;</line>
+		</data>
+		<data>
+			<line>    let min_index = -1;</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    for(let v = 0; v &lt; V; v++)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        if (sptSet[v] == false &amp;&amp; dist[v] &lt;= min)</line>
+		</data>
+		<data>
+			<line>        {</line>
+		</data>
+		<data>
+			<line>            min = dist[v];</line>
+		</data>
+		<data>
+			<line>            min_index = v;</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line>    return min_index;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// A utility function to print</line>
+		</data>
+		<data>
+			<line>// the constructed distance array</line>
+		</data>
+		<data>
+			<line>function printSolution(dist)</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    document.write("Vertex \t\t Distance from Source&lt;br&gt;");</line>
+		</data>
+		<data>
+			<line>    for(let i = 0; i &lt; V; i++)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        document.write(i + " \t\t " +</line>
+		</data>
+		<data>
+			<line>                dist[i] + "&lt;br&gt;");</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Function that implements Dijkstra's</line>
+		</data>
+		<data>
+			<line>// single source shortest path algorithm</line>
+		</data>
+		<data>
+			<line>// for a graph represented using adjacency</line>
+		</data>
+		<data>
+			<line>// matrix representation</line>
+		</data>
+		<data>
+			<line>function dijkstra(graph, src)</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    let dist = new Array(V);</line>
+		</data>
+		<data>
+			<line>    let sptSet = new Array(V);</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    // Initialize all distances as</line>
+		</data>
+		<data>
+			<line>    // INFINITE and stpSet[] as false</line>
+		</data>
+		<data>
+			<line>    for(let i = 0; i &lt; V; i++)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        dist[i] = Number.MAX_VALUE;</line>
+		</data>
+		<data>
+			<line>        sptSet[i] = false;</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    // Distance of source vertex</line>
+		</data>
+		<data>
+			<line>    // from itself is always 0</line>
+		</data>
+		<data>
+			<line>    dist[src] = 0;</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    // Find shortest path for all vertices</line>
+		</data>
+		<data>
+			<line>    for(let count = 0; count &lt; V - 1; count++)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>        // Pick the minimum distance vertex</line>
+		</data>
+		<data>
+			<line>        // from the set of vertices not yet</line>
+		</data>
+		<data>
+			<line>        // processed. u is always equal to</line>
+		</data>
+		<data>
+			<line>        // src in first iteration.</line>
+		</data>
+		<data>
+			<line>        let u = minDistance(dist, sptSet);</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>        // Mark the picked vertex as processed</line>
+		</data>
+		<data>
+			<line>        sptSet[u] = true;</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>        // Update dist value of the adjacent</line>
+		</data>
+		<data>
+			<line>        // vertices of the picked vertex.</line>
+		</data>
+		<data>
+			<line>        for(let v = 0; v &lt; V; v++)</line>
+		</data>
+		<data>
+			<line>        {</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>            // Update dist[v] only if is not in</line>
+		</data>
+		<data>
+			<line>            // sptSet, there is an edge from u</line>
+		</data>
+		<data>
+			<line>            // to v, and total weight of path</line>
+		</data>
+		<data>
+			<line>            // from src to v through u is smaller</line>
+		</data>
+		<data>
+			<line>            // than current value of dist[v]</line>
+		</data>
+		<data>
+			<line>            if (!sptSet[v] &amp;&amp; graph[u][v] != 0 &amp;&amp;</line>
+		</data>
+		<data>
+			<line>                dist[u] != Number.MAX_VALUE &amp;&amp;</line>
+		</data>
+		<data>
+			<line>                dist[u] + graph[u][v] &lt; dist[v])</line>
+		</data>
+		<data>
+			<line>            {</line>
+		</data>
+		<data>
+			<line>                dist[v] = dist[u] + graph[u][v];</line>
+		</data>
+		<data>
+			<line>            }</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+		<data>
+			<line>    // Print the constructed distance array</line>
+		</data>
+		<data>
+			<line>    printSolution(dist);</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Driver code</line>
+		</data>
+		<data>
+			<line>let graph = [ [ 0, 4, 0, 0, 0, 0, 0, 8, 0 ],</line>
+		</data>
+		<data>
+			<line>            [ 4, 0, 8, 0, 0, 0, 0, 11, 0 ],</line>
+		</data>
+		<data>
+			<line>            [ 0, 8, 0, 7, 0, 4, 0, 0, 2 ],</line>
+		</data>
+		<data>
+			<line>            [ 0, 0, 7, 0, 9, 14, 0, 0, 0],</line>
+		</data>
+		<data>
+			<line>            [ 0, 0, 0, 9, 0, 10, 0, 0, 0 ],</line>
+		</data>
+		<data>
+			<line>            [ 0, 0, 4, 14, 10, 0, 2, 0, 0],</line>
+		</data>
+		<data>
+			<line>            [ 0, 0, 0, 0, 0, 2, 0, 1, 6 ],</line>
+		</data>
+		<data>
+			<line>            [ 8, 11, 0, 0, 0, 0, 1, 0, 7 ],</line>
+		</data>
+		<data>
+			<line>            [ 0, 0, 2, 0, 0, 0, 6, 7, 0 ] ]</line>
+		</data>
+		<data>
+			<line>dijkstra(graph, 0);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+	</algorithm>
+	<algorithm id="fw_c">
+		<data>
+			<line>// C Program for Floyd Warshall Algorithm</line>
+		</data>
+		<data>
+			<line>#include &lt; stdio.h &gt; </line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Number of vertices in the graph</line>
+		</data>
+		<data>
+			<line>#define V 4</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>/* Define Infinite as a large enough</line>
+		</data>
+		<data>
+			<line>value. This value will be used</line>
+		</data>
+		<data>
+			<line>for vertices not connected to each other */</line>
+		</data>
+		<data>
+			<line>#define INF 99999</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// A function to print the solution matrix</line>
+		</data>
+		<data>
+			<line>void printSolution(int dist[][V]);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Solves the all-pairs shortest path</line>
+		</data>
+		<data>
+			<line>// problem using Floyd Warshall algorithm</line>
+		</data>
+		<data>
+			<line>void floydWarshall(int dist[][V])</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    int i, j, k;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    /* Add all vertices one by one to</line>
+		</data>
+		<data>
+			<line>    the set of intermediate vertices.</line>
+		</data>
+		<data>
+			<line>    ---&gt; Before start of an iteration, we</line>
+		</data>
+		<data>
+			<line>    have shortest distances between all</line>
+		</data>
+		<data>
+			<line>    pairs of vertices such that the shortest</line>
+		</data>
+		<data>
+			<line>    distances consider only the</line>
+		</data>
+		<data>
+			<line>    vertices in set {0, 1, 2, .. k-1} as</line>
+		</data>
+		<data>
+			<line>    intermediate vertices.</line>
+		</data>
+		<data>
+			<line>    ----&gt; After the end of an iteration,</line>
+		</data>
+		<data>
+			<line>    vertex no. k is added to the set of</line>
+		</data>
+		<data>
+			<line>    intermediate vertices and the set</line>
+		</data>
+		<data>
+			<line>    becomes {0, 1, 2, .. k} */</line>
+		</data>
+		<data>
+			<line>    for (k = 0; k &lt; V; k++) {</line>
+		</data>
+		<data>
+			<line>        // Pick all vertices as source one by one</line>
+		</data>
+		<data>
+			<line>        for (i = 0; i &lt; V; i++) {</line>
+		</data>
+		<data>
+			<line>            // Pick all vertices as destination for the</line>
+		</data>
+		<data>
+			<line>            // above picked source</line>
+		</data>
+		<data>
+			<line>            for (j = 0; j &lt; V; j++) {</line>
+		</data>
+		<data>
+			<line>                // If vertex k is on the shortest path from</line>
+		</data>
+		<data>
+			<line>                // i to j, then update the value of</line>
+		</data>
+		<data>
+			<line>                // dist[i][j]</line>
+		</data>
+		<data>
+			<line>                if (dist[i][k] + dist[k][j] &lt; dist[i][j])</line>
+		</data>
+		<data>
+			<line>                    dist[i][j] = dist[i][k] + dist[k][j];</line>
+		</data>
+		<data>
+			<line>            }</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Print the shortest distance matrix</line>
+		</data>
+		<data>
+			<line>    printSolution(dist);</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>/* A utility function to print solution */</line>
+		</data>
+		<data>
+			<line>void printSolution(int dist[][V])</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    printf(</line>
+		</data>
+		<data>
+			<line>        "The following matrix shows the shortest distances"</line>
+		</data>
+		<data>
+			<line>        " between every pair of vertices \n");</line>
+		</data>
+		<data>
+			<line>    for (int i = 0; i &lt; V; i++) {</line>
+		</data>
+		<data>
+			<line>        for (int j = 0; j &lt; V; j++) {</line>
+		</data>
+		<data>
+			<line>            if (dist[i][j] == INF)</line>
+		</data>
+		<data>
+			<line>                printf("%7s", "INF");</line>
+		</data>
+		<data>
+			<line>            else</line>
+		</data>
+		<data>
+			<line>                printf("%7d", dist[i][j]);</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>        printf("\n");</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// driver's code</line>
+		</data>
+		<data>
+			<line>int main()</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    /* Let us create the following weighted graph</line>
+		</data>
+		<data>
+			<line>            10</line>
+		</data>
+		<data>
+			<line>    (0)-------&gt;(3)</line>
+		</data>
+		<data>
+			<line>        |         /|\</line>
+		</data>
+		<data>
+			<line>    5 |         |</line>
+		</data>
+		<data>
+			<line>        |         | 1</line>
+		</data>
+		<data>
+			<line>    \|/         |</line>
+		</data>
+		<data>
+			<line>    (1)-------&gt;(2)</line>
+		</data>
+		<data>
+			<line>            3         */</line>
+		</data>
+		<data>
+			<line>    int graph[V][V] = { { 0, 5, INF, 10 },</line>
+		</data>
+		<data>
+			<line>                        { INF, 0, 3, INF },</line>
+		</data>
+		<data>
+			<line>                        { INF, INF, 0, 1 },</line>
+		</data>
+		<data>
+			<line>                        { INF, INF, INF, 0 } };</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Function call</line>
+		</data>
+		<data>
+			<line>    floydWarshall(graph);</line>
+		</data>
+		<data>
+			<line>    return 0;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+	</algorithm>
+	<algorithm id="fw_cpp">
+		<data>
+			<line>// C++ Program for Floyd Warshall Algorithm</line>
+		</data>
+		<data>
+			<line>#include &lt; bits/stdc++.h &gt; </line>
+		</data>
+		<data>
+			<line>using namespace std;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Number of vertices in the graph</line>
+		</data>
+		<data>
+			<line>#define V 4</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>/* Define Infinite as a large enough</line>
+		</data>
+		<data>
+			<line>value.This value will be used for</line>
+		</data>
+		<data>
+			<line>vertices not connected to each other */</line>
+		</data>
+		<data>
+			<line>#define INF 99999</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// A function to print the solution matrix</line>
+		</data>
+		<data>
+			<line>void printSolution(int dist[][V]);</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Solves the all-pairs shortest path</line>
+		</data>
+		<data>
+			<line>// problem using Floyd Warshall algorithm</line>
+		</data>
+		<data>
+			<line>void floydWarshall(int dist[][V])</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    int i, j, k;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    /* Add all vertices one by one to</line>
+		</data>
+		<data>
+			<line>    the set of intermediate vertices.</line>
+		</data>
+		<data>
+			<line>    ---&gt; Before start of an iteration,</line>
+		</data>
+		<data>
+			<line>    we have shortest distances between all</line>
+		</data>
+		<data>
+			<line>    pairs of vertices such that the</line>
+		</data>
+		<data>
+			<line>    shortest distances consider only the</line>
+		</data>
+		<data>
+			<line>    vertices in set {0, 1, 2, .. k-1} as</line>
+		</data>
+		<data>
+			<line>    intermediate vertices.</line>
+		</data>
+		<data>
+			<line>    ----&gt; After the end of an iteration,</line>
+		</data>
+		<data>
+			<line>    vertex no. k is added to the set of</line>
+		</data>
+		<data>
+			<line>    intermediate vertices and the set becomes {0, 1, 2, ..</line>
+		</data>
+		<data>
+			<line>    k} */</line>
+		</data>
+		<data>
+			<line>    for (k = 0; k &lt; V; k++) {</line>
+		</data>
+		<data>
+			<line>        // Pick all vertices as source one by one</line>
+		</data>
+		<data>
+			<line>        for (i = 0; i &lt; V; i++) {</line>
+		</data>
+		<data>
+			<line>            // Pick all vertices as destination for the</line>
+		</data>
+		<data>
+			<line>            // above picked source</line>
+		</data>
+		<data>
+			<line>            for (j = 0; j &lt; V; j++) {</line>
+		</data>
+		<data>
+			<line>                // If vertex k is on the shortest path from</line>
+		</data>
+		<data>
+			<line>                // i to j, then update the value of</line>
+		</data>
+		<data>
+			<line>                // dist[i][j]</line>
+		</data>
+		<data>
+			<line>                if (dist[i][j] &gt; (dist[i][k] + dist[k][j])</line>
+		</data>
+		<data>
+			<line>                    &amp;&amp; (dist[k][j] != INF</line>
+		</data>
+		<data>
+			<line>                        &amp;&amp; dist[i][k] != INF))</line>
+		</data>
+		<data>
+			<line>                    dist[i][j] = dist[i][k] + dist[k][j];</line>
+		</data>
+		<data>
+			<line>            }</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Print the shortest distance matrix</line>
+		</data>
+		<data>
+			<line>    printSolution(dist);</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>/* A utility function to print solution */</line>
+		</data>
+		<data>
+			<line>void printSolution(int dist[][V])</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    cout &lt;&lt; "The following matrix shows the shortest "</line>
+		</data>
+		<data>
+			<line>            "distances"</line>
+		</data>
+		<data>
+			<line>            " between every pair of vertices \n";</line>
+		</data>
+		<data>
+			<line>    for (int i = 0; i &lt; V; i++) {</line>
+		</data>
+		<data>
+			<line>        for (int j = 0; j &lt; V; j++) {</line>
+		</data>
+		<data>
+			<line>            if (dist[i][j] == INF)</line>
+		</data>
+		<data>
+			<line>                cout &lt;&lt; "INF"</line>
+		</data>
+		<data>
+			<line>                    &lt;&lt; " ";</line>
+		</data>
+		<data>
+			<line>            else</line>
+		</data>
+		<data>
+			<line>                cout &lt;&lt; dist[i][j] &lt;&lt; " ";</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>        cout &lt;&lt; endl;</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>// Driver's code</line>
+		</data>
+		<data>
+			<line>int main()</line>
+		</data>
+		<data>
+			<line>{</line>
+		</data>
+		<data>
+			<line>    /* Let us create the following weighted graph</line>
+		</data>
+		<data>
+			<line>            10</line>
+		</data>
+		<data>
+			<line>    (0)-------&gt;(3)</line>
+		</data>
+		<data>
+			<line>        |     /|\</line>
+		</data>
+		<data>
+			<line>    5 |     |</line>
+		</data>
+		<data>
+			<line>        |     | 1</line>
+		</data>
+		<data>
+			<line>    \|/     |</line>
+		</data>
+		<data>
+			<line>    (1)-------&gt;(2)</line>
+		</data>
+		<data>
+			<line>            3     */</line>
+		</data>
+		<data>
+			<line>    int graph[V][V] = { { 0, 5, INF, 10 },</line>
+		</data>
+		<data>
+			<line>                        { INF, 0, 3, INF },</line>
+		</data>
+		<data>
+			<line>                        { INF, INF, 0, 1 },</line>
+		</data>
+		<data>
+			<line>                        { INF, INF, INF, 0 } };</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Function call</line>
+		</data>
+		<data>
+			<line>    floydWarshall(graph);</line>
+		</data>
+		<data>
+			<line>    return 0;</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+	</algorithm>
+	<algorithm id="fw_java">
+		<data>
+			<line>// Java program for Floyd Warshall All Pairs Shortest</line>
+		</data>
+		<data>
+			<line>// Path algorithm.</line>
+		</data>
+		<data>
+			<line>import java.io.*;</line>
+		</data>
+		<data>
+			<line>import java.lang.*;</line>
+		</data>
+		<data>
+			<line>import java.util.*;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>class AllPairShortestPath {</line>
+		</data>
+		<data>
+			<line>    final static int INF = 99999, V = 4;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    void floydWarshall(int dist[][])</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        int i, j, k;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        /* Add all vertices one by one</line>
+		</data>
+		<data>
+			<line>        to the set of intermediate</line>
+		</data>
+		<data>
+			<line>        vertices.</line>
+		</data>
+		<data>
+			<line>        ---&gt; Before start of an iteration,</line>
+		</data>
+		<data>
+			<line>            we have shortest</line>
+		</data>
+		<data>
+			<line>            distances between all pairs</line>
+		</data>
+		<data>
+			<line>            of vertices such that</line>
+		</data>
+		<data>
+			<line>            the shortest distances consider</line>
+		</data>
+		<data>
+			<line>            only the vertices in</line>
+		</data>
+		<data>
+			<line>            set {0, 1, 2, .. k-1} as</line>
+		</data>
+		<data>
+			<line>            intermediate vertices.</line>
+		</data>
+		<data>
+			<line>        ----&gt; After the end of an iteration,</line>
+		</data>
+		<data>
+			<line>                vertex no. k is added</line>
+		</data>
+		<data>
+			<line>                to the set of intermediate</line>
+		</data>
+		<data>
+			<line>                vertices and the set</line>
+		</data>
+		<data>
+			<line>                becomes {0, 1, 2, .. k} */</line>
+		</data>
+		<data>
+			<line>        for (k = 0; k &lt; V; k++) {</line>
+		</data>
+		<data>
+			<line>            // Pick all vertices as source one by one</line>
+		</data>
+		<data>
+			<line>            for (i = 0; i &lt; V; i++) {</line>
+		</data>
+		<data>
+			<line>                // Pick all vertices as destination for the</line>
+		</data>
+		<data>
+			<line>                // above picked source</line>
+		</data>
+		<data>
+			<line>                for (j = 0; j &lt; V; j++) {</line>
+		</data>
+		<data>
+			<line>                    // If vertex k is on the shortest path</line>
+		</data>
+		<data>
+			<line>                    // from i to j, then update the value of</line>
+		</data>
+		<data>
+			<line>                    // dist[i][j]</line>
+		</data>
+		<data>
+			<line>                    if (dist[i][k] + dist[k][j]</line>
+		</data>
+		<data>
+			<line>                        &lt; dist[i][j])</line>
+		</data>
+		<data>
+			<line>                        dist[i][j]</line>
+		</data>
+		<data>
+			<line>                            = dist[i][k] + dist[k][j];</line>
+		</data>
+		<data>
+			<line>                }</line>
+		</data>
+		<data>
+			<line>            }</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Print the shortest distance matrix</line>
+		</data>
+		<data>
+			<line>        printSolution(dist);</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    void printSolution(int dist[][])</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        System.out.println(</line>
+		</data>
+		<data>
+			<line>            "The following matrix shows the shortest "</line>
+		</data>
+		<data>
+			<line>            + "distances between every pair of vertices");</line>
+		</data>
+		<data>
+			<line>        for (int i = 0; i &lt; V; ++i) {</line>
+		</data>
+		<data>
+			<line>            for (int j = 0; j &lt; V; ++j) {</line>
+		</data>
+		<data>
+			<line>                if (dist[i][j] == INF)</line>
+		</data>
+		<data>
+			<line>                    System.out.print("INF ");</line>
+		</data>
+		<data>
+			<line>                else</line>
+		</data>
+		<data>
+			<line>                    System.out.print(dist[i][j] + " ");</line>
+		</data>
+		<data>
+			<line>            }</line>
+		</data>
+		<data>
+			<line>            System.out.println();</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Driver's code</line>
+		</data>
+		<data>
+			<line>    public static void main(String[] args)</line>
+		</data>
+		<data>
+			<line>    {</line>
+		</data>
+		<data>
+			<line>        /* Let us create the following weighted graph</line>
+		</data>
+		<data>
+			<line>        10</line>
+		</data>
+		<data>
+			<line>        (0)-------&gt;(3)</line>
+		</data>
+		<data>
+			<line>        |         /|\</line>
+		</data>
+		<data>
+			<line>        5 |         |</line>
+		</data>
+		<data>
+			<line>        |         | 1</line>
+		</data>
+		<data>
+			<line>        \|/         |</line>
+		</data>
+		<data>
+			<line>        (1)-------&gt;(2)</line>
+		</data>
+		<data>
+			<line>        3         */</line>
+		</data>
+		<data>
+			<line>        int graph[][] = { { 0, 5, INF, 10 },</line>
+		</data>
+		<data>
+			<line>                        { INF, 0, 3, INF },</line>
+		</data>
+		<data>
+			<line>                        { INF, INF, 0, 1 },</line>
+		</data>
+		<data>
+			<line>                        { INF, INF, INF, 0 } };</line>
+		</data>
+		<data>
+			<line>        AllPairShortestPath a = new AllPairShortestPath();</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Function call</line>
+		</data>
+		<data>
+			<line>        a.floydWarshall(graph);</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line>}</line>
+		</data>
+		<data>
+			<line />
+		</data>
+	</algorithm>
+	<algorithm id="fw_python3">
+		<data>
+			<line># Python3 Program for Floyd Warshall Algorithm</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line># Number of vertices in the graph</line>
+		</data>
+		<data>
+			<line>V = 4</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line># Define infinity as the large</line>
+		</data>
+		<data>
+			<line># enough value. This value will be</line>
+		</data>
+		<data>
+			<line># used for vertices not connected to each other</line>
+		</data>
+		<data>
+			<line>INF = 99999</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line># Solves all pair shortest path</line>
+		</data>
+		<data>
+			<line># via Floyd Warshall Algorithm</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>def floydWarshall(graph):</line>
+		</data>
+		<data>
+			<line>    """ dist[][] will be the output</line>
+		</data>
+		<data>
+			<line>    matrix that will finally</line>
+		</data>
+		<data>
+			<line>        have the shortest distances</line>
+		</data>
+		<data>
+			<line>        between every pair of vertices """</line>
+		</data>
+		<data>
+			<line>    """ initializing the solution matrix</line>
+		</data>
+		<data>
+			<line>    same as input graph matrix</line>
+		</data>
+		<data>
+			<line>    OR we can say that the initial</line>
+		</data>
+		<data>
+			<line>    values of shortest distances</line>
+		</data>
+		<data>
+			<line>    are based on shortest paths considering no</line>
+		</data>
+		<data>
+			<line>    intermediate vertices """</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    dist = list(map(lambda i: list(map(lambda j: j, i)), graph))</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    """ Add all vertices one by one</line>
+		</data>
+		<data>
+			<line>    to the set of intermediate</line>
+		</data>
+		<data>
+			<line>    vertices.</line>
+		</data>
+		<data>
+			<line>    ---&gt; Before start of an iteration,</line>
+		</data>
+		<data>
+			<line>    we have shortest distances</line>
+		</data>
+		<data>
+			<line>    between all pairs of vertices</line>
+		</data>
+		<data>
+			<line>    such that the shortest</line>
+		</data>
+		<data>
+			<line>    distances consider only the</line>
+		</data>
+		<data>
+			<line>    vertices in the set</line>
+		</data>
+		<data>
+			<line>    {0, 1, 2, .. k-1} as intermediate vertices.</line>
+		</data>
+		<data>
+			<line>    ----&gt; After the end of a</line>
+		</data>
+		<data>
+			<line>    iteration, vertex no. k is</line>
+		</data>
+		<data>
+			<line>    added to the set of intermediate</line>
+		</data>
+		<data>
+			<line>    vertices and the</line>
+		</data>
+		<data>
+			<line>    set becomes {0, 1, 2, .. k}</line>
+		</data>
+		<data>
+			<line>    """</line>
+		</data>
+		<data>
+			<line>    for k in range(V):</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        # pick all vertices as source one by one</line>
+		</data>
+		<data>
+			<line>        for i in range(V):</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>            # Pick all vertices as destination for the</line>
+		</data>
+		<data>
+			<line>            # above picked source</line>
+		</data>
+		<data>
+			<line>            for j in range(V):</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>                # If vertex k is on the shortest path from</line>
+		</data>
+		<data>
+			<line>                # i to j, then update the value of dist[i][j]</line>
+		</data>
+		<data>
+			<line>                dist[i][j] = min(dist[i][j],</line>
+		</data>
+		<data>
+			<line>                                dist[i][k] + dist[k][j]</line>
+		</data>
+		<data>
+			<line>                                )</line>
+		</data>
+		<data>
+			<line>    printSolution(dist)</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line># A utility function to print the solution</line>
+		</data>
+		<data>
+			<line>def printSolution(dist):</line>
+		</data>
+		<data>
+			<line>    print("Following matrix shows the shortest distances\</line>
+		</data>
+		<data>
+			<line>between every pair of vertices")</line>
+		</data>
+		<data>
+			<line>    for i in range(V):</line>
+		</data>
+		<data>
+			<line>        for j in range(V):</line>
+		</data>
+		<data>
+			<line>            if(dist[i][j] == INF):</line>
+		</data>
+		<data>
+			<line>                print("%7s" % ("INF"), end=" ")</line>
+		</data>
+		<data>
+			<line>            else:</line>
+		</data>
+		<data>
+			<line>                print("%7d\t" % (dist[i][j]), end=' ')</line>
+		</data>
+		<data>
+			<line>            if j == V-1:</line>
+		</data>
+		<data>
+			<line>                print()</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line># Driver's code</line>
+		</data>
+		<data>
+			<line>if __name__ == "__main__":</line>
+		</data>
+		<data>
+			<line>    """</line>
+		</data>
+		<data>
+			<line>                10</line>
+		</data>
+		<data>
+			<line>        (0)-------&gt;(3)</line>
+		</data>
+		<data>
+			<line>            |         /|\</line>
+		</data>
+		<data>
+			<line>        5 |         |</line>
+		</data>
+		<data>
+			<line>            |         | 1</line>
+		</data>
+		<data>
+			<line>        \|/         |</line>
+		</data>
+		<data>
+			<line>        (1)-------&gt;(2)</line>
+		</data>
+		<data>
+			<line>                3         """</line>
+		</data>
+		<data>
+			<line>    graph = [[0, 5, INF, 10],</line>
+		</data>
+		<data>
+			<line>            [INF, 0, 3, INF],</line>
+		</data>
+		<data>
+			<line>            [INF, INF, 0, 1],</line>
+		</data>
+		<data>
+			<line>            [INF, INF, INF, 0]</line>
+		</data>
+		<data>
+			<line>            ]</line>
+		</data>
+		<data>
+			<line>    # Function call</line>
+		</data>
+		<data>
+			<line>    floydWarshall(graph)</line>
+		</data>
+	</algorithm>
+	<algorithm id="fw_javascript">
+		<data>
+			<line>// A JavaScript program for Floyd Warshall All</line>
+		</data>
+		<data>
+			<line>    // Pairs Shortest Path algorithm.</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    var INF = 99999;</line>
+		</data>
+		<data>
+			<line>    class AllPairShortestPath {</line>
+		</data>
+		<data>
+			<line>        constructor() {</line>
+		</data>
+		<data>
+			<line>        this.V = 4;</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        floydWarshall(graph) {</line>
+		</data>
+		<data>
+			<line>        var dist = Array.from(Array(this.V), () =&gt; new Array(this.V).fill(0));</line>
+		</data>
+		<data>
+			<line>        var i, j, k;</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Initialize the solution matrix</line>
+		</data>
+		<data>
+			<line>        // same as input graph matrix</line>
+		</data>
+		<data>
+			<line>        // Or we can say the initial</line>
+		</data>
+		<data>
+			<line>        // values of shortest distances</line>
+		</data>
+		<data>
+			<line>        // are based on shortest paths</line>
+		</data>
+		<data>
+			<line>        // considering no intermediate</line>
+		</data>
+		<data>
+			<line>        // vertex</line>
+		</data>
+		<data>
+			<line>        for (i = 0; i &lt; this.V; i++) {</line>
+		</data>
+		<data>
+			<line>            for (j = 0; j &lt; this.V; j++) {</line>
+		</data>
+		<data>
+			<line>                dist[i][j] = graph[i][j];</line>
+		</data>
+		<data>
+			<line>            }</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        /* Add all vertices one by one to</line>
+		</data>
+		<data>
+			<line>        the set of intermediate vertices.</line>
+		</data>
+		<data>
+			<line>        ---&gt; Before start of a iteration,</line>
+		</data>
+		<data>
+			<line>            we have shortest distances</line>
+		</data>
+		<data>
+			<line>            between all pairs of vertices</line>
+		</data>
+		<data>
+			<line>            such that the shortest distances</line>
+		</data>
+		<data>
+			<line>            consider only the vertices in</line>
+		</data>
+		<data>
+			<line>            set {0, 1, 2, .. k-1} as</line>
+		</data>
+		<data>
+			<line>            intermediate vertices.</line>
+		</data>
+		<data>
+			<line>        ---&gt; After the end of a iteration,</line>
+		</data>
+		<data>
+			<line>            vertex no. k is added</line>
+		</data>
+		<data>
+			<line>            to the set of intermediate</line>
+		</data>
+		<data>
+			<line>            vertices and the set</line>
+		</data>
+		<data>
+			<line>            becomes {0, 1, 2, .. k} */</line>
+		</data>
+		<data>
+			<line>        for (k = 0; k &lt; this.V; k++) {</line>
+		</data>
+		<data>
+			<line>            // Pick all vertices as source</line>
+		</data>
+		<data>
+			<line>            // one by one</line>
+		</data>
+		<data>
+			<line>            for (i = 0; i &lt; this.V; i++) {</line>
+		</data>
+		<data>
+			<line>            // Pick all vertices as destination</line>
+		</data>
+		<data>
+			<line>            // for the above picked source</line>
+		</data>
+		<data>
+			<line>            for (j = 0; j &lt; this.V; j++) {</line>
+		</data>
+		<data>
+			<line>                // If vertex k is on the shortest</line>
+		</data>
+		<data>
+			<line>                // path from i to j, then update</line>
+		</data>
+		<data>
+			<line>                // the value of dist[i][j]</line>
+		</data>
+		<data>
+			<line>                if (dist[i][k] + dist[k][j] &lt; dist[i][j]) {</line>
+		</data>
+		<data>
+			<line>                dist[i][j] = dist[i][k] + dist[k][j];</line>
+		</data>
+		<data>
+			<line>                }</line>
+		</data>
+		<data>
+			<line>            }</line>
+		</data>
+		<data>
+			<line>            }</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        // Print the shortest distance matrix</line>
+		</data>
+		<data>
+			<line>        this.printSolution(dist);</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>        printSolution(dist) {</line>
+		</data>
+		<data>
+			<line>        document.write(</line>
+		</data>
+		<data>
+			<line>            "Following matrix shows the shortest " +</line>
+		</data>
+		<data>
+			<line>            "distances between every pair of vertices &lt;br&gt; "</line>
+		</data>
+		<data>
+			<line>        );</line>
+		</data>
+		<data>
+			<line>        for (var i = 0; i &lt; this.V; ++i) {</line>
+		</data>
+		<data>
+			<line>            for (var j = 0; j &lt; this.V; ++j) {</line>
+		</data>
+		<data>
+			<line>            if (dist[i][j] == INF) {</line>
+		</data>
+		<data>
+			<line>                document.write(" INF ");</line>
+		</data>
+		<data>
+			<line>            } else {</line>
+		</data>
+		<data>
+			<line>                document.write("  " + dist[i][j] + " ");</line>
+		</data>
+		<data>
+			<line>            }</line>
+		</data>
+		<data>
+			<line>            }</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>            document.write("&lt; br &gt;");</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>        }</line>
+		</data>
+		<data>
+			<line>    }</line>
+		</data>
+		<data>
+			<line>    // Driver Code</line>
+		</data>
+		<data>
+			<line>    /* Let us create the following</line>
+		</data>
+		<data>
+			<line>        weighted graph</line>
+		</data>
+		<data>
+			<line>            10</line>
+		</data>
+		<data>
+			<line>        (0)-------&gt;(3)</line>
+		</data>
+		<data>
+			<line>        |         /|\</line>
+		</data>
+		<data>
+			<line>        5 |         |</line>
+		</data>
+		<data>
+			<line>        |         | 1</line>
+		</data>
+		<data>
+			<line>        \|/         |</line>
+		</data>
+		<data>
+			<line>        (1)-------&gt;(2)</line>
+		</data>
+		<data>
+			<line>            3             */</line>
+		</data>
+		<data>
+			<line>    var graph = [</line>
+		</data>
+		<data>
+			<line>        [0, 5, INF, 10],</line>
+		</data>
+		<data>
+			<line>        [INF, 0, 3, INF],</line>
+		</data>
+		<data>
+			<line>        [INF, INF, 0, 1],</line>
+		</data>
+		<data>
+			<line>        [INF, INF, INF, 0],</line>
+		</data>
+		<data>
+			<line>    ];</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    var a = new AllPairShortestPath();</line>
+		</data>
+		<data>
+			<line />
+		</data>
+		<data>
+			<line>    // Print the solution</line>
+		</data>
+		<data>
+			<line>    a.floydWarshall(graph);</line>
+		</data>
+		<data>
+			<line></line>
+		</data>
+	</algorithm>
+</document>
