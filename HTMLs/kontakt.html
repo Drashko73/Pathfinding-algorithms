@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontaktiraj me</title>
+    <link rel="stylesheet" href="../SyleSheets/style1.css">
+    <link rel="shortcut icon" href="../Images/contactMe.jpg" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Amaranth' rel='stylesheet'>
+</head>
+<body onload="preparePage()">
+<div id="page">
+
+    <div id="vertikalniMeni">
+        <div id="meni">
+            <ul>
+                <li><a href="index.html">Naslovna</a></li>
+                <li><a href="uvod.html">Uvod</a></li>
+                <li><a href="algoritmiZaOdredjivanjePuta.html">Algoritmi za odredjivanje puta</a></li>
+                <li><a href="visualize.html" target="_blank">Vizualizator</a></li>
+                <li><a href="kontakt.html">Kontaktiraj me</a></li>
+                <li class="logout-li"><a href="index.html" onclick="logout()">Izloguj se</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="contentKontakt" class="content">
+        <h1>Kontakt informacije</h1>
+        <div id="mejl">
+            <h3>Pošalji mejl</h3>
+
+            <fieldset style="width: max-content;">
+                <legend>Unesi tekst poruke</legend>
+                <form action="mailto: radovandk@gmail.com" method="post" enctype="text/plain">
+                    <textarea name="Tekst" id="textMejl" cols="85" rows="10" style="resize: none;"></textarea><br>
+                    <input type="submit" value="Pošalji mejl" title="Pošalji">
+                </form>
+            </fieldset>
+        </div>
+
+        <div id="ostalo">
+            <h3>Link ka mrežama</h3>
+            <div>
+                <img src="../Images/linkedinLogo.png" alt="linkedin" width="25px" height="25px" title="Linkedin" draggable="false">&nbsp;&nbsp;<a href="https://www.linkedin.com/in/radovan-draskovic/" target="_blank" title="Poseti link">in/radovan-draskovic/</a> <br>
+            </div>
+            <div>
+                <img src="../Images/githubLogo.png" alt="github" width="25px" height="25px" title="GitHub" draggable="false">&nbsp;&nbsp;<a href="https://github.com/Drashko73" target="_blank" title="Poseti link">github.com/Drashko73</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+const textAreaPolje = document.getElementById("textMejl");
+
+function preparePage() {
+    textAreaPolje.value = "";
+}
+
+function logout() {
+    sessionStorage.setItem("loginFlag", "false");
+}
+
+</script>
+</body>
+</html>
