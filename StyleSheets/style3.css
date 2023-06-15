@@ -1,0 +1,36 @@
+body {
+    margin: 10px;
+    background-color: lightgrey;
+}
+
+#page {
+    background-color: white;
+    width: 1000px;
+    margin: auto;
+    border: 2px solid black;
+}
+
+div#content {
+    padding: 20px;
+}
+
+div#content h2 {
+    font-family: 'Amaranth';
+    font-size: 26px;
+    color: darkcyan;
+    text-decoration: underline darkred 3px;
+}
+
+div#content button {
+    cursor: pointer;
+    text-align: center;
+    border: 4px groove black;
+    opacity: 0.8;
+}
+
+div#content button:hover { opacity: 1; }
+
+div#content button a {
+    text-decoration: none;
+    color: black;
+}
