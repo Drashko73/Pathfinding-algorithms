@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="rs">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Radovan Draskovic">
+        <title>Naslovna</title>
+
+        <link rel="shortcut icon" href="../Images/index_tab_icon.jpg" type="image/x-icon">
+        <link rel="stylesheet" href="../SyleSheets/style1.css">
+        <link href='https://fonts.googleapis.com/css?family=Amaranth' rel='stylesheet'>
+        <script src="../Scripts/index.js" defer ></script>
+
+    </head>
+    <body onload = "preparePage()">
+    <div id="page">
+        
+        <div id="login">
+        <div id="innerDiv">
+            <div id="samoNaslov">
+                <h2>Za pristup sajtu je potrebna prijava</h2>
+            </div>
+            <div id="loginForm">
+                <span class="row"><span>Ime i prezime korisnika: </span><input type="text" id="inp-korisnickoIme" onchange="checkUserName()"></span><br>
+                <span class="row"><span>Lozinka: </span><input type="password" id="inp-lozinka" onchange="checkPassword()"></span><br>
+                <span class="row"><span>E-mail adresa: </span><input type="email" id="inp-email" onchange="checkEmail()"></span><br>
+                <span class="row"><span>Broj telefona: </span><input type="text" id="inp-brojTelefona" onchange="checkPhoneNumber()"></span><br>
+                <button id="loginButton" onclick="logionLogout()">Prijavi se</button>
+            </div>
+            <div id="footerHelp">
+                <span>Za više informacija o toku prijave posetite sledeći <a href="uputstvoZaPrijavu.html">link</a></span> 
+            </div>
+        </div>
+        </div>
+
+        <div id="contentInd">
+            <div id="vertikalniMeni">
+                <div id="meni">
+                    <ul>
+                        <li><a href="index.html">Naslovna</a></li>
+                        <li><a href="uvod.html">Uvod</a></li>
+                        <li><a href="algoritmiZaOdredjivanjePuta.html">Algoritmi za odredjivanje puta</a></li>
+                        <li><a href="visualize.html" target="_blank">Vizualizator</a></li>
+                        <li><a href="kontakt.html">Kontaktiraj me</a></li>
+                        <li class="logout-li"><a href="index.html" onclick="logout()">Izloguj se</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="contentIndex" class="content">
+                <div id="headerPomeraj">
+                    <span id="mestoZaVremeIPorukuDobrodoslice"></span>
+                </div>
+
+                <div id="opisKoncepta">
+                    <fieldset>
+                        <p>
+                            Ovaj sajt je kreiran za potrebe projekta iz predmeta <strong>Klijentske Web Tehnologije</strong> školske 2022/2023. godine. Sadržaj sajta u nastavku sadrži kratak teorijski uvod u pojam algoritama i jedne strukture podataka - grafa. Algoritmi koji su obrađivani na ovom sajtu su algoritmi koji se koriste za određivanje rastojanja u grafu i samim tim predstavljaju algoritme koji na uspešan način mogu odrediti put (najkraći, odnosno najoptimalniji) između dve zadate tačke. <br>
+                            Pored teorijske osnove koja opisuje navedene algoritme, implementirana je i <strong>simulacija</strong> korišćenjem programskog jezika <em>JavaScript</em> koja simulira izvršavanje dva najjednostavnija ali dosta korisna algoritma - <strong>BFS</strong> (<em>Breath First Search</em>) i <strong>DFS</strong> (<em>Depth First Search</em>). Takođe, implementirano je <strong>generisanje koda</strong> za svaki od algoritama u programskom jeziku po izboru. <br>
+                            <span style="float: right; margin-top: 15px;"><strong>Autor:</strong> Radovan Drašković</span>
+                            <div style="clear: both;"></div>
+                        </p>
+                    </fieldset>
+                </div>
+
+                <div id="primeri">
+                    <h2>Primeri kreiranih struktura</h2>
+                    <div id="primerIzborAlgoritama">
+                        <a href="algoritmiZaOdredjivanjePuta.html#prikazKodaAlgoritama"><img src="../Images/showCodeExample.jpg" alt="Show code" width="650px" draggable="false" title="Pogledaj detaljnije"></a>
+                    </div>
+                    <div id="primerVizualizator">
+                        <a href="visualize.html" target="_blank"><img src="../Images/visualizeExample.jpg" alt="Visualize example" width="650px" draggable="false" title="Pogledaj detaljnije"></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
