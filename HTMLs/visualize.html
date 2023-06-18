@@ -14,26 +14,29 @@
 </head>
 <body onload="preparePage()">
 <div id="page">
-
-    <div id="naslov">
-        <h1>Vizuelizacija algoritama</h1>
+    <div id="loadBar">
+        <div id="myBar"><span id="tekstBar"></span></div> <!-- LOAD BAR -->
     </div>
+    <div id="notLoadBar">
+        <div id="naslov">
+            <h1>Vizuelizacija algoritama</h1>
+        </div>
 
-    <div id="header">
-    <div id="padding">
-        
-        <span id="izaberiAlgoritam" class="mr"><span>Algoritmi</span> &nbsp; <img onclick="prikaziIliSakrijDostupneAlgoritme()" src="../Images/algorithm.svg" alt="alg" height="30px" width="30px" draggable="false" title="Izaberi algoritam"></span>
-        <span id="izaberiLavirint" class="mr"><span>Generiši lavirint</span> &nbsp; <img onclick="prikaziIliSakrijDostupneLavirinte()" src="../Images/maze.svg" alt="maze" height="30px" width="30px" draggable="false" title="Izaberi lavirint"></span>
-        <span id="play" class="mr"> <img src="../Images/play.svg" alt="play " height="30px" width="30px" draggable="false" title="Izvrši selektovani algoritam" onclick="runSelectedAlgorithm()"></span>
-        <span id="obrisi" onclick="restartujTablu()" title="Očisti tablu"> Očisti tablu &nbsp; <img src="../Images/broom.svg" alt="restart" height="30px" width="30px" draggable="false"></span>
-        <span id="obrisiNakonAlgoritma"><img src="../Images/x.svg" alt="" width="30px" height="30px" title="Ukloni ostatke algoritma" onclick="ukloniPoslediceAlgoritma()"></span>
+        <div id="header">
+        <div id="padding">
+            
+            <span id="izaberiAlgoritam" class="mr"><span>Algoritmi</span> &nbsp; <img onclick="prikaziIliSakrijDostupneAlgoritme()" src="../Images/algorithm.svg" alt="alg" height="30px" width="30px" draggable="false" title="Izaberi algoritam"></span>
+            <span id="izaberiLavirint" class="mr"><span>Generiši lavirint</span> &nbsp; <img onclick="prikaziIliSakrijDostupneLavirinte()" src="../Images/maze.svg" alt="maze" height="30px" width="30px" draggable="false" title="Izaberi lavirint"></span>
+            <span id="play" class="mr"> <img src="../Images/play.svg" alt="play " height="30px" width="30px" draggable="false" title="Izvrši selektovani algoritam" onclick="runSelectedAlgorithm()"></span>
+            <span id="obrisi" onclick="restartujTablu()" title="Očisti tablu"> Očisti tablu &nbsp; <img src="../Images/broom.svg" alt="restart" height="30px" width="30px" draggable="false"></span>
+            <span id="obrisiNakonAlgoritma"><img src="../Images/x.svg" alt="" width="30px" height="30px" title="Ukloni ostatke algoritma" onclick="ukloniPoslediceAlgoritma()"></span>
 
+        </div>
+        </div>
+
+        <div id="matrix"></div>
+        <div id="footer"><span id="movingText"></span></div>
     </div>
-    </div>
-
-    <div id="matrix"></div>
-    <div id="footer"><span id="movingText"></span></div>
-
 </div>
 </body>
 </html>
