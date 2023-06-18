@@ -1,6 +1,7 @@
 
 
 function preparePage() {
+    
     matrica = [];
     for(let i = 0; i < brojVrsta; i++) {
         let niz = [];
@@ -10,15 +11,38 @@ function preparePage() {
     }
 
     mouseclicked = false;
-    
     matrica[positionStartI][positionStartJ] = START;
     matrica[positionEndI][positionEndJ] = END;
     turn = 1;
     dozvoliMenjanje = true;
     ostatciAlgoritma.style.display = "none";
 
-    generisiMatricu();
-    moveFooter();
+    divKontent.style.display = "none";
+    divLoadBar.style.display = "";
+    moveBar();
+}
+
+function moveBar() {
+    if (moveBarIndicator == 0) {
+        moveBarIndicator = 1;
+        var elem = document.getElementById("myBar");
+        var width = 1;
+        var id = setInterval(frame, 15);
+        function frame() {
+            if (width > 100) {
+                clearInterval(id);
+                moveBarIndicator = 0;
+                divLoadBar.style.display = "none";
+                divKontent.style.display = "";
+                generisiMatricu();
+                moveFooter();
+            } else {
+                width++;
+                document.getElementById("tekstBar").innerText = width + "%";
+                elem.style.width = width + "%";
+            }
+        }
+    }
 }
 
 /*
@@ -601,6 +625,8 @@ const positionStartJ = 2;                             // pocetna pozicija j-ta k
 const positionEndI = 6;                               // zavrsna pozicija i-ta koordinata
 const positionEndJ = 29;                              // zavrsna pozicija j-ta koordinata
 
+const divLoadBar = document.getElementById("loadBar");
+const divKontent = document.getElementById("notLoadBar");
 const kontejnerZaMatricu = document.getElementById("matrix");                               // referenca na div u kojem se nalazi tabela koja predstavlja matricu
 const kontejnerFooter = document.getElementById("footer");                                  // referenca na div koji prestavlja footer
 const tekstPomeranje = document.querySelector("div#footer span");                           // referenca na span sa tekstom koji se pomera u footer-u
@@ -615,6 +641,9 @@ let dozvoliMenjanje = true;                         // indikator koji onemogucav
 
 let showMaze = 0;
 const spanShowMaze = document.querySelector("span#izaberiLavirint span");
+
+/* Pomeranje load bar-a */
+let moveBarIndicator = 0;
 
 /* Pomeranje footer-a */
 const step = 1;                                     // za koliko piksela se pomera tekst u footer-u
